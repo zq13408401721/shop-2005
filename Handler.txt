@@ -1,0 +1,48 @@
+Handler原理
+1.概念：主线程和子线程之间通信机制
+    Handler在哪里创建？
+
+
+2.相关的类：Handler,MessageQueue,Looper,Message
+    Handler作用？
+    用来发送sendMessage(msg)和处理消息handleMessage(Message msg)
+    MessageQueue类的作用？
+    用来存储Message消息对象，通过链表的形式存储Message。
+
+    messageQueue的创建？
+    在looper的构造函数中创建的
+
+    Looper类的作用？
+    Looper用来查看MessageQueue中是否有需要处理的message。
+    Looper在主线程中创建，在主线程的ActivityThread这个类的main函数中创建
+
+    looper的创建过程？
+    Looper调用prepareMainLooper->prepare,先通过threadLocal.get来判断looper是否创建过，如果已经创建抛出异常。如果没有创建过，new Looper
+
+    Message类的作用？
+    用来存储消息
+
+3.相关类的关系
+    handler通过sendMessage方法，把message对象通过消息系统时间由小到大的存入到MessageQueue中，
+    由Looper的loop方法通过死循环去判断MessageQueue中是否有需要处理的Message，
+    如果有取出对应的Message,并且把改message从消息链表中删除，通过Message.target的dispathMessage方法把message传出去，
+    传入到Handler的handleMessage方法。
+
+4.Handler包含的数据结构
+    消息链表
+5.Handler优缺点
+
+6.注意
+    msg.target是谁？->msg对应handler
+    一个线程里面可以创建多个handler?  N个
+    为什么多个handler的时候，message执行没有出错？ msg的target指向的是对应的handler
+    一个线程里面有多个looper?  1个
+    子线程和子线程之间能否用handler来实现通信？
+    2个答案：1)在子线程中创建对应的handler
+        a.通过looper.prepare创建子线程的looper
+        b.通过looper.myLooper获取创建的looper，然后绑定到对应的handler
+        c.通过looper.loop开启looper死循环
+
+        2)通过HandlerThread类来实现
+
+    msg的when系统时间戳？  设备开机到现在的系统时间

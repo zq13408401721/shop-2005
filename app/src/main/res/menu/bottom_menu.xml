@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_home" android:icon="@mipmap/ic_menu_choice_pressed"
+        android:title="主页"></item>
+    <item android:id="@+id/menu_topic" android:icon="@mipmap/ic_menu_topic_nor"
+        android:title="专题"></item>
+    <item android:id="@+id/menu_sort" android:icon="@mipmap/ic_menu_sort_nor"
+        android:title="分类"></item>
+    <item android:id="@+id/menu_car" android:icon="@mipmap/ic_menu_shoping_nor"
+        android:title="购物车"></item>
+    <item android:id="@+id/menu_mine" android:icon="@mipmap/ic_menu_me_nor"
+        android:title="我的"></item>
+</menu>
