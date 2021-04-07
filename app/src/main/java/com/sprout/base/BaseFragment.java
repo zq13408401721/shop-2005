@@ -19,7 +19,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment<P extends IBasePresenter> extends Fragment implements IBaseView {
 
-    protected P persenter;
+    protected P presenter;
     Unbinder unbinder;
     protected Context mContext;
 
@@ -35,9 +35,9 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         super.onViewCreated(view, savedInstanceState);
         mContext = getContext();
         unbinder = ButterKnife.bind(this,view);
-        persenter = createPersenter();
-        if(persenter != null){
-            persenter.attachView(this);
+        presenter = createPersenter();
+        if(presenter != null){
+            presenter.attachView(this);
         }
         initView();
         initData();
@@ -72,8 +72,8 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
         if(unbinder != null){
             unbinder.unbind();
         }
-        if(persenter != null){
-            persenter.unAttachView();
+        if(presenter != null){
+            presenter.unAttachView();
         }
     }
 }

@@ -1,21 +1,17 @@
 package com.sprout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.res.ColorStateList;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.home.IMain;
-import com.sprout.ui.HomeActivity;
 import com.sprout.ui.car.CarFragment;
 import com.sprout.ui.home.HomeFragment;
 import com.sprout.ui.mine.MineFragment;
@@ -50,7 +46,10 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
     protected void initView() {
 
         initFragments();
-
+        //bottomnavigation 选中颜色的设置
+        ColorStateList colorStateList = getResources().getColorStateList(R.color.bottomnavigation_color);
+        bottomNavigation.setItemTextColor(colorStateList);
+        bottomNavigation.setItemIconTintList(colorStateList);
         FragmentManager fragmentManager = getSupportFragmentManager();
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -58,27 +57,27 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
                 FragmentTransaction transaction;
                 switch (item.getItemId()){
                     case R.id.menu_home:
-                        item.setIcon(R.mipmap.ic_menu_choice_pressed);
+                        item.setChecked(true);
                         transaction = fragmentManager.beginTransaction();
                         transaction.replace(R.id.fragmentbox,homeFragment).commit();
                         break;
                     case R.id.menu_topic:
-                        item.setIcon(R.mipmap.ic_menu_topic_pressed);
+                        item.setChecked(true);
                         transaction = fragmentManager.beginTransaction();
                         transaction.replace(R.id.fragmentbox,topicFragment).commit();
                         break;
                     case R.id.menu_sort:
-                        item.setIcon(R.mipmap.ic_menu_sort_pressed);
+                        item.setChecked(true);
                         transaction = fragmentManager.beginTransaction();
                         transaction.replace(R.id.fragmentbox,sortFragment).commit();
                         break;
                     case R.id.menu_car:
-                        item.setIcon(R.mipmap.ic_menu_shoping_pressed);
+                        item.setChecked(true);
                         transaction = fragmentManager.beginTransaction();
                         transaction.replace(R.id.fragmentbox,carFragment).commit();
                         break;
                     case R.id.menu_mine:
-                        item.setIcon(R.mipmap.ic_menu_me_pressed);
+                        item.setChecked(true);
                         transaction = fragmentManager.beginTransaction();
                         transaction.replace(R.id.fragmentbox,mineFragment).commit();
                         break;
@@ -87,7 +86,6 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
             }
         });
     }
-
 
     private void initFragments(){
         homeFragment = HomeFragment.getInstance();

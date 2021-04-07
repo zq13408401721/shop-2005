@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_home" android:icon="@mipmap/ic_menu_choice_pressed"
+    <item android:id="@+id/menu_home" android:icon="@drawable/menu_home"
         android:title="主页"></item>
-    <item android:id="@+id/menu_topic" android:icon="@mipmap/ic_menu_topic_nor"
+    <item android:id="@+id/menu_topic" android:icon="@drawable/menu_topic"
         android:title="专题"></item>
-    <item android:id="@+id/menu_sort" android:icon="@mipmap/ic_menu_sort_nor"
+    <item android:id="@+id/menu_sort" android:icon="@drawable/menu_sort"
         android:title="分类"></item>
-    <item android:id="@+id/menu_car" android:icon="@mipmap/ic_menu_shoping_nor"
+    <item android:id="@+id/menu_car" android:icon="@drawable/menu_car"
         android:title="购物车"></item>
-    <item android:id="@+id/menu_mine" android:icon="@mipmap/ic_menu_me_nor"
+    <item android:id="@+id/menu_mine" android:icon="@drawable/menu_mine"
         android:title="我的"></item>
 </menu>

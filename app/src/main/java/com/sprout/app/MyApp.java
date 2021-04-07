@@ -1,4 +1,4 @@
-package com.sprout;
+package com.sprout.app;
 
 import android.app.Application;
 
