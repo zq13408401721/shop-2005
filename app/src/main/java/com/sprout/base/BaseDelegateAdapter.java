@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
+import com.sprout.app.Delegate;
 
 import java.util.List;
 
@@ -19,24 +20,55 @@ import java.util.List;
  */
 public abstract class BaseDelegateAdapter<D> extends DelegateAdapter.Adapter<BaseDelegateAdapter.BaseViewHolder> {
 
-    Context context;
-    List<D> list;
-    String title;
 
-    public BaseDelegateAdapter(Context context,List<D> list){
+
+    Context context;
+    protected List<D> list;
+    protected String title;
+    Delegate delegate;
+    protected D data;
+    public BaseDelegateAdapter(Context context, List<D> list, Delegate delegate){
         this.context = context;
         this.list = list;
+        this.delegate = delegate;
     }
 
-    public BaseDelegateAdapter(Context context,String title){
+    public BaseDelegateAdapter(Context context,String title,Delegate delegate){
         this.context = context;
         this.title = title;
+        this.delegate = delegate;
     }
 
+    public BaseDelegateAdapter(Context context,D data,Delegate delegate){
+        this.context = context;
+        this.data = data;
+        this.delegate = delegate;
+    }
+
+
+
+    //页面的布局类型
+    protected abstract LayoutHelper getLayoutHelper();
+
+    protected abstract int getLayoutId();
+
+    protected abstract void bindData(BaseDelegateAdapter.BaseViewHolder holder,D data);
 
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         return getLayoutHelper();
+    }
+
+    @Override
+    public int getItemCount() {
+        if(delegate == Delegate.TITLE){
+            return title == null || title.length() == 0 ? 0 : 1;
+        }else if(delegate == Delegate.LIST){
+            return list == null ? 0 : list.size();
+        }else if(delegate == Delegate.OBJECT){
+            return data == null ? 0 : 1;
+        }
+        return 0;
     }
 
     @NonNull
@@ -48,24 +80,17 @@ public abstract class BaseDelegateAdapter<D> extends DelegateAdapter.Adapter<Bas
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
-        bindData(holder,list.get(position));
-    }
+    public void onBindViewHolder(@NonNull BaseDelegateAdapter.BaseViewHolder holder, int position) {
 
-    @Override
-    public int getItemCount() {
-        if(title != null){
-            return title.length() == 0 ? 0 : 1;
+        if(delegate == Delegate.TITLE){
+            bindData(holder, (D) title);
+        }else if(delegate == Delegate.LIST){
+            bindData(holder,list.get(position));
+        }else if(delegate == Delegate.OBJECT){
+            bindData(holder,data);
         }
-        return list.size();
+
     }
-
-    //页面的布局类型
-    protected abstract LayoutHelper getLayoutHelper();
-
-    protected abstract int getLayoutId();
-
-    protected abstract void bindData(BaseViewHolder holder,D data);
 
     public class BaseViewHolder extends RecyclerView.ViewHolder{
 
@@ -78,13 +103,12 @@ public abstract class BaseDelegateAdapter<D> extends DelegateAdapter.Adapter<Bas
         /**
          * <V extends View> 声明一个类型 V
          * @param id
-         * @param <V>
          * @return V
          */
-        public <V extends View> V getViewById(int id){
-            V view = (V)views.get(id);
+        public View getViewById(int id){
+            View view = views.get(id);
             if(view == null){
-                view = (V) itemView.findViewById(id);
+                view = itemView.findViewById(id);
                 views.append(id,view);
             }
             return view;

@@ -19,9 +19,16 @@ public class TitleAdapter extends DelegateAdapter.Adapter<TitleAdapter.ViewHolde
     Context context;
     String title;
 
+    View.OnClickListener clickListener;
+
+
     public TitleAdapter(Context context,String title){
         this.context = context;
         this.title = title;
+    }
+
+    public void addOnClickListener(View.OnClickListener listener){
+        this.clickListener =  listener;
     }
 
     @Override
@@ -57,6 +64,7 @@ public class TitleAdapter extends DelegateAdapter.Adapter<TitleAdapter.ViewHolde
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txt_title);
+            txtTitle.setOnClickListener(clickListener);
         }
     }
 

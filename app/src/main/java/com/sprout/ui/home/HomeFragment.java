@@ -1,5 +1,8 @@
 package com.sprout.ui.home;
 
+import android.content.Intent;
+import android.view.View;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
@@ -9,6 +12,7 @@ import com.sprout.base.BaseFragment;
 import com.sprout.interfaces.home.IHome;
 import com.sprout.mode.data.HomeBean;
 import com.sprout.presenter.home.HomePresenter;
+import com.sprout.ui.goods.NewGoodsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,13 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
 
     List<HomeBean.DataBean.NewGoodsListBean> newGoods;
     NewGoodAdapter newGoodAdapter;
+
+    //热门商品
+    String hotTitle = "热门";
+    TitleAdapter hotTitleAdapter;
+
+    List<HomeBean.DataBean.HotGoodsListBean> hotGoods;
+    HotAdapter hotAdapter;
 
 
 
@@ -85,9 +96,26 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         newGoodTitleAdapter = new TitleAdapter(mContext,newGoodTitle);
         delegateAdapter.addAdapter(newGoodTitleAdapter);
 
+        //新品标题点击
+        newGoodTitleAdapter.addOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, NewGoodsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         newGoods = new ArrayList<>();
         newGoodAdapter = new NewGoodAdapter(mContext,newGoods);
         delegateAdapter.addAdapter(newGoodAdapter);
+
+        //热门
+        hotTitleAdapter = new TitleAdapter(mContext,hotTitle);
+        delegateAdapter.addAdapter(hotTitleAdapter);
+
+        hotGoods = new ArrayList<>();
+        hotAdapter = new HotAdapter(mContext,hotGoods);
+        delegateAdapter.addAdapter(hotAdapter);
 
 
 
@@ -122,6 +150,10 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
             newGoods.clear();
             newGoods.addAll(result.getData().getNewGoodsList());
             newGoodAdapter.notifyDataSetChanged();
+
+            hotGoods.clear();
+            hotGoods.addAll(result.getData().getHotGoodsList());
+            hotAdapter.notifyDataSetChanged();
 
         }
     }
