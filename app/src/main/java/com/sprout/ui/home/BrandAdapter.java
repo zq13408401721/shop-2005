@@ -63,8 +63,8 @@ public class BrandAdapter extends DelegateAdapter.Adapter<BrandAdapter.ViewHolde
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView imgBrand;
-        TextView txtName;
+        ImageView imgBrand; //imageview -> T extends View
+        TextView txtName;   //textview -> T extends View
         TextView txtPrice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

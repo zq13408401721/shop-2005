@@ -1,13 +1,24 @@
 package com.sprout.ui.mine;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.TextView;
+
 import com.sprout.R;
 import com.sprout.base.BaseFragment;
 import com.sprout.interfaces.car.ICar;
 import com.sprout.interfaces.mine.IMine;
 import com.sprout.presenter.car.CarPresenter;
 import com.sprout.presenter.mine.MinePresenter;
+import com.sprout.ui.setting.SettingActivity;
 
-public class MineFragment extends BaseFragment<IMine.Presenter> implements IMine.View {
+import butterknife.BindView;
+
+public class MineFragment extends BaseFragment<IMine.Presenter> implements IMine.View, View.OnClickListener {
+
+
+    @BindView(R.id.txt_setting)
+    TextView txtSetting;
 
     public static MineFragment getInstance(){
         return new MineFragment();
@@ -20,7 +31,7 @@ public class MineFragment extends BaseFragment<IMine.Presenter> implements IMine
 
     @Override
     public void initView() {
-
+        txtSetting.setOnClickListener(this);
     }
 
     @Override
@@ -33,4 +44,13 @@ public class MineFragment extends BaseFragment<IMine.Presenter> implements IMine
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.txt_setting:
+                Intent intent = new Intent(mContext, SettingActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
 }

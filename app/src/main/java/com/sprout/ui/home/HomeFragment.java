@@ -31,12 +31,18 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
     ChannelAdapter channelAdapter;
 
     //品牌标题
-    String brandTitle="";
+    String brandTitle="品牌制造商直供";
     TitleAdapter titleAdapter;
 
     List<HomeBean.DataBean.BrandListBean> brands;
     BrandAdapter brandAdapter;
 
+    //新品
+    String newGoodTitle = "周一周四 · 新品首发";
+    TitleAdapter newGoodTitleAdapter;
+
+    List<HomeBean.DataBean.NewGoodsListBean> newGoods;
+    NewGoodAdapter newGoodAdapter;
 
 
 
@@ -75,6 +81,16 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         brandAdapter = new BrandAdapter(mContext,brands);
         delegateAdapter.addAdapter(brandAdapter);
 
+        //新品
+        newGoodTitleAdapter = new TitleAdapter(mContext,newGoodTitle);
+        delegateAdapter.addAdapter(newGoodTitleAdapter);
+
+        newGoods = new ArrayList<>();
+        newGoodAdapter = new NewGoodAdapter(mContext,newGoods);
+        delegateAdapter.addAdapter(newGoodAdapter);
+
+
+
     }
 
     @Override
@@ -99,12 +115,13 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
             channelAdapter.notifyDataSetChanged();
 
             //brand 品牌
-            brandTitle = "品牌制造商直供";
-            titleAdapter.notifyDataSetChanged();
-
             brands.clear();
             brands.addAll(result.getData().getBrandList());
             brandAdapter.notifyDataSetChanged();
+
+            newGoods.clear();
+            newGoods.addAll(result.getData().getNewGoodsList());
+            newGoodAdapter.notifyDataSetChanged();
 
         }
     }

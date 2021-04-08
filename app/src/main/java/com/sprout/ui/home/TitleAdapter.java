@@ -46,6 +46,7 @@ public class TitleAdapter extends DelegateAdapter.Adapter<TitleAdapter.ViewHolde
 
     @Override
     public int getItemCount() {
+        //return title.length() == 0 ? 0 : 1;
         return 1;
     }
 

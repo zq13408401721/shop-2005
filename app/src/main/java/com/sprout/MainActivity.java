@@ -36,6 +36,8 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
     Fragment carFragment;
     Fragment mineFragment;
 
+    int currentItemId; //当前的页面所对应的ItemID
+
 
     @Override
     protected int getLayout() {
@@ -54,6 +56,10 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(currentItemId == item.getItemId()){
+                    return false;
+                }
+                currentItemId = item.getItemId();
                 FragmentTransaction transaction;
                 switch (item.getItemId()){
                     case R.id.menu_home:
@@ -85,6 +91,8 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
                 return false;
             }
         });
+
+        initHome();
     }
 
     private void initFragments(){
@@ -93,6 +101,17 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
         sortFragment = SortFragment.getInstance();
         carFragment = CarFragment.getInstance();
         mineFragment = MineFragment.getInstance();
+    }
+
+    /**
+     * 初始化显示第一个页面
+     */
+    private void initHome(){
+        currentItemId = R.id.menu_home;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction;
+        transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragmentbox,homeFragment).commit();
     }
 
     @Override
