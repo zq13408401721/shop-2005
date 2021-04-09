@@ -22,7 +22,7 @@ public abstract class BaseDelegateAdapter<D> extends DelegateAdapter.Adapter<Bas
 
 
 
-    Context context;
+    protected Context context;
     protected List<D> list;
     protected String title;
     Delegate delegate;

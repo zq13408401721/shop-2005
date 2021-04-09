@@ -23,8 +23,8 @@ Handler原理
     用来存储消息
 
 3.相关类的关系
-    handler通过sendMessage方法，把message对象通过消息系统时间由小到大的存入到MessageQueue中，
-    由Looper的loop方法通过死循环去判断MessageQueue中是否有需要处理的Message，
+    handler通过sendMessage方法，把message对象通过消息系统时间(系统开机到现在)由小到大的存入到MessageQueue中，
+    由Looper的loop方法通过死循环去判断MessageQueue中是否有需要处理的Message(messagequeue.next)，
     如果有取出对应的Message,并且把改message从消息链表中删除，通过Message.target的dispathMessage方法把message传出去，
     传入到Handler的handleMessage方法。
 

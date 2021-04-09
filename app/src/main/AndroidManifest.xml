@@ -29,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyNews"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.setting.SettingActivity"></activity>
+        <activity android:name=".test.TouchEventActivity"></activity>
+        <activity android:name=".ui.setting.SettingActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".ui.goods.NewGoodsActivity"/>
+        <activity android:name=".ui.goods.NewGoodsActivity" />
     </application>
 
 </manifest>

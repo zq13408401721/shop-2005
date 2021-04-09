@@ -3,6 +3,7 @@ package com.sprout.ui.goods;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,10 @@ import com.sprout.R;
 import com.sprout.app.Delegate;
 import com.sprout.base.BaseDelegateAdapter;
 import com.sprout.mode.data.NewGoodsBean;
+import com.sprout.widget.FilterWindow;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewGoodsFilterAdapter extends BaseDelegateAdapter<NewGoodsBean> implements View.OnClickListener {
 
@@ -25,8 +30,17 @@ public class NewGoodsFilterAdapter extends BaseDelegateAdapter<NewGoodsBean> imp
     TextView txtFilter;
     int select=1;
 
+    GoodFilter filter; //接口实列
+
+    //条件筛选弹框
+    FilterWindow filterWindow;
+
     public NewGoodsFilterAdapter(Context context, NewGoodsBean data, Delegate delegate) {
         super(context, data, delegate);
+    }
+
+    public void addGoodFilter(GoodFilter filter){
+        this.filter = filter;
     }
 
     public void setData(NewGoodsBean data){
@@ -68,6 +82,7 @@ public class NewGoodsFilterAdapter extends BaseDelegateAdapter<NewGoodsBean> imp
                 if(select != 1){
                     //刷新
                     select = 1;
+                    setFileter("desc","default",0);
                 }
                 break;
             case R.id.layout_price:
@@ -77,6 +92,7 @@ public class NewGoodsFilterAdapter extends BaseDelegateAdapter<NewGoodsBean> imp
                     txtPrice.setTag("down");
                     arrowUp.setImageResource(R.mipmap.ic_arrow_down_nor);
                     arrowDown.setImageResource(R.mipmap.ic_arrow_down_select);
+                    setFileter("desc","price",0);
                 }else{
                     //重复点击
                     String tag = (String) txtPrice.getTag();
@@ -84,10 +100,12 @@ public class NewGoodsFilterAdapter extends BaseDelegateAdapter<NewGoodsBean> imp
                         txtPrice.setTag("up");
                         arrowUp.setImageResource(R.mipmap.ic_arrow_down_select);
                         arrowDown.setImageResource(R.mipmap.ic_arrow_down_nor);
+                        setFileter("asc","price",0);
                     }else{
                         txtPrice.setTag("down");
                         arrowUp.setImageResource(R.mipmap.ic_arrow_down_nor);
                         arrowDown.setImageResource(R.mipmap.ic_arrow_down_select);
+                        setFileter("desc","price",0);
                     }
                 }
                 break;
@@ -95,9 +113,45 @@ public class NewGoodsFilterAdapter extends BaseDelegateAdapter<NewGoodsBean> imp
                 txtFilter.setTextColor(Color.RED);
                 if(select != 3){
                     select = 3;
+                    filterWindow = new FilterWindow(context,data.getData().getFilterCategory());
+                    filterWindow.addOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int filterId = (int) v.getTag();
+                            setFileter("desc","category",filterId);
+                        }
+                    });
+                    filterWindow.showAsDropDown(txtFilter);
+                }else{
+                    if(filterWindow != null){
+                        if(filterWindow.isShowing()){
+                            filterWindow.dismiss();
+                        }else{
+                            filterWindow.showAsDropDown(txtFilter);
+                        }
+                    }
                 }
                 break;
 
+        }
+    }
+
+    /**
+     * 筛选数据的条件
+     * @param order
+     * @param categoryId
+     */
+    private void setFileter(String order,String sort,int categoryId){
+        //默认全选的情况的参数
+        Map<String,String> map = new HashMap<>();
+        map.put("isNew","1");
+        map.put("page","1");
+        map.put("size","10");
+        map.put("order",order);
+        map.put("sort",sort);
+        map.put("categoryId",String.valueOf(categoryId));
+        if(filter != null){
+            filter.setFilterParam(map);
         }
     }
 
@@ -111,4 +165,14 @@ public class NewGoodsFilterAdapter extends BaseDelegateAdapter<NewGoodsBean> imp
         arrowUp.setImageResource(R.mipmap.ic_arrow_down_nor);
         arrowDown.setImageResource(R.mipmap.ic_arrow_down_nor);
     }
+
+
+    /**
+     * 接口的定义
+     */
+    public interface GoodFilter{
+        void setFilterParam(Map<String,String> map);
+    }
+
+
 }

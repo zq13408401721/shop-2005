@@ -1,0 +1,10 @@
+ext{
+    configField = [
+            ServerAddress_release: "\"https://cdwan.cn/\"",
+            ServerAddress_debug: "\"https://cdplay.cn/\"",
+            APIVersionName :"\"ver\"",
+            APIVersionCode :"\"2.0.1",
+            APPName_release:"\"shop发布版\"",
+            APPName_debug:"\"shop测试版\""
+    ]
+}

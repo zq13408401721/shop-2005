@@ -12,12 +12,14 @@ import com.sprout.mode.data.NewGoodTopBean;
 import com.sprout.mode.data.NewGoodsBean;
 import com.sprout.presenter.goods.NewGoodsPresenter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 
-public class NewGoodsActivity extends BaseActivity<INewGoods.Presenter> implements INewGoods.View {
+public class NewGoodsActivity extends BaseActivity<INewGoods.Presenter> implements INewGoods.View, NewGoodsFilterAdapter.GoodFilter {
 
     @BindView(R.id.recy_newgoods)
     RecyclerView recyNewGoods;
@@ -31,6 +33,10 @@ public class NewGoodsActivity extends BaseActivity<INewGoods.Presenter> implemen
 
     NewGoodsBean newGoodsBean;
     NewGoodsFilterAdapter newGoodsFilterAdapter;
+
+    //列表数据
+    List<NewGoodsBean.DataBeanX.GoodsListBean> goodList;
+    NewGoodsListAdapter newGoodsListAdapter;
 
 
 
@@ -54,7 +60,13 @@ public class NewGoodsActivity extends BaseActivity<INewGoods.Presenter> implemen
         delegateAdapter.addAdapter(newGoodsTopAdapter);
 
         newGoodsFilterAdapter = new NewGoodsFilterAdapter(this,newGoodsBean, Delegate.OBJECT);
+        newGoodsFilterAdapter.addGoodFilter(this);
         delegateAdapter.addAdapter(newGoodsFilterAdapter);
+
+        //商品列表显示的初始化
+        goodList = new ArrayList<>();
+        newGoodsListAdapter =  new NewGoodsListAdapter(this,goodList);
+        delegateAdapter.addAdapter(newGoodsListAdapter);
 
     }
 
@@ -91,8 +103,23 @@ public class NewGoodsActivity extends BaseActivity<INewGoods.Presenter> implemen
 
     @Override
     public void getNewGoodsReturn(NewGoodsBean result) {
-        newGoodsBean = result;
-        newGoodsFilterAdapter.setData(newGoodsBean);
-        newGoodsFilterAdapter.notifyDataSetChanged();
+        if(newGoodsBean == null){
+            newGoodsBean = result;
+            newGoodsFilterAdapter.setData(newGoodsBean);
+            newGoodsFilterAdapter.notifyDataSetChanged();
+        }
+        //刷新商品列表的展示
+        goodList.clear();
+        goodList.addAll(result.getData().getGoodsList());
+        newGoodsListAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 接收FilterAdapter传出来的参数
+     * @param map
+     */
+    @Override
+    public void setFilterParam(Map<String, String> map) {
+        presenter.getNewGoods(map);
     }
 }

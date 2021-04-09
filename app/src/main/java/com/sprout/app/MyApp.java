@@ -2,6 +2,7 @@ package com.sprout.app;
 
 import android.app.Application;
 
+import com.sprout.BuildConfig;
 import com.sprout.R;
 import com.sprout.utils.SpUtils;
 

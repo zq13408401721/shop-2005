@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.start.IStart;
+import com.sprout.test.TouchEventActivity;
 
 /**
  *启动页
@@ -17,7 +18,7 @@ public class StartActivity extends BaseActivity<IStart.Presenter> implements ISt
 
     @Override
     protected void initView() {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
