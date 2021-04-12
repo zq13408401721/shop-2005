@@ -1,9 +1,13 @@
 package com.sprout.test;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -24,6 +28,23 @@ public class EditTextActivity extends AppCompatActivity {
 
     Map<String,String> map = new HashMap<>();
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            //接收消息
+            super.handleMessage(msg);
+        }
+    };
+
+    private Handler handler2 = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            //接收消息
+            super.handleMessage(msg);
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +53,14 @@ public class EditTextActivity extends AppCompatActivity {
         btnInput = findViewById(R.id.btn_input);
         initView();
         map.put(null,"a");
+        Message msg = new Message();
+        msg.what = 1;
+        //发送
+        handler.sendMessage(msg);
+        Message msg1 = new Message();
+        msg1.what = 1;
+        //发送
+        handler2.sendMessage(msg1);
     }
 
     private void initView(){

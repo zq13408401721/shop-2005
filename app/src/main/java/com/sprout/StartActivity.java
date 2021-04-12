@@ -19,7 +19,7 @@ public class StartActivity extends BaseActivity<IStart.Presenter> implements ISt
 
     @Override
     protected void initView() {
-        Intent intent = new Intent(this, EditTextActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

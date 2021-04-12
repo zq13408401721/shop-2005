@@ -3,6 +3,8 @@ package com.sprout.api;
 
 import com.sprout.mode.data.CatalogBean;
 import com.sprout.mode.data.CatalogTabBean;
+import com.sprout.mode.data.CategoryListBean;
+import com.sprout.mode.data.CategoryTopBean;
 import com.sprout.mode.data.HomeBean;
 import com.sprout.mode.data.NewGoodTopBean;
 import com.sprout.mode.data.NewGoodsBean;
@@ -42,6 +44,25 @@ public interface ServiceApi {
      */
     @GET("api/catalog/current")
     Flowable<CatalogBean> getCatalog(@Query("id") int id);
+
+    /**
+     * 分类商品详情也的顶部数据接口  主页频道入口的商品数据
+     * @param id
+     * @return
+     */
+    @GET("api/goods/category")
+    Flowable<CategoryTopBean> getCategoryTop(@Query("id") int id);
+
+    /**
+     * 分类详情页列表数据
+     * @param id
+     * @param page
+     * @param size
+     * @return
+     */
+    @GET("api/goods/list")
+    Flowable<CategoryListBean> getCategoryList(@Query("id") int id,@Query("page") int page,@Query("size") int size);
+
 
 
 
