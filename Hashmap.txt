@@ -1,0 +1,19 @@
+1. 什么是Hashmap ？
+    数据结构，以key-value存储数据。,key-value可以是任何的数据类型。
+2. HashMap的key值是否可以为Null
+    可以，如果key=null,得到的hash值为0，只能有key值为null的key。
+3. HashMap底层实现?
+    数组+链表（java 1.8以前）/ 数组+红黑树
+
+4. Hash冲突？
+    不同key值，计算出来的hash值一样
+
+5. 如何解决hash冲突？
+    通过hash在数组中找到对应的下标位，然后通过链表的数据插入来解决hash冲突，通过判断hash和key值插入节点。
+
+6. Hashmap存值？
+    首先通过key值计算出一个hash值(散列），然后通过取末得到数组的下标位，通过判断当前节点是链表还是红黑树。
+    如果是链表把数据插入到对应的链表中，通过判断节点中的hash值，key值是否相等，如果相等，说明是当前key值
+    的替换。如果不相等，把新的节点插入到链表中。
+7. HashMap取值？
+    通过key值的hash和key值进行判断。

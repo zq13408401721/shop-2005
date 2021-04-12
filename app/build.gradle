@@ -67,5 +67,7 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     //kapt  'com.github.bumptech.glide:compiler:4.9.0'
+    //竖导航
+    implementation 'q.rorbin:VerticalTabLayout:1.2.5'
 
 }
