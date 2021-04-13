@@ -5,6 +5,7 @@ import com.sprout.mode.data.CatalogBean;
 import com.sprout.mode.data.CatalogTabBean;
 import com.sprout.mode.data.CategoryListBean;
 import com.sprout.mode.data.CategoryTopBean;
+import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.mode.data.HomeBean;
 import com.sprout.mode.data.NewGoodTopBean;
 import com.sprout.mode.data.NewGoodsBean;
@@ -63,7 +64,13 @@ public interface ServiceApi {
     @GET("api/goods/list")
     Flowable<CategoryListBean> getCategoryList(@Query("id") int id,@Query("page") int page,@Query("size") int size);
 
-
+    /**
+     * 商品详情页
+     * @param id
+     * @return
+     */
+    @GET("api/goods/detail")
+    Flowable<GoodDetailBean> getGoodDetail(@Query("id") int id);
 
 
 }
