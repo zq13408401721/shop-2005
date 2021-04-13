@@ -2,4 +2,7 @@
     <string name="app_name">MyNews</string>
 
     <string name="price_word">￥$</string>
+    <string name="good_web">
+
+    </string>
 </resources>

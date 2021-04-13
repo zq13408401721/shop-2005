@@ -8,4 +8,6 @@ public class Constants {
     //价格的字符模板
     public static String price_word;
 
+    public static String web_content;
+
 }

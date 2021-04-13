@@ -1,5 +1,6 @@
 package com.sprout.ui.sort;
 
+import android.content.Intent;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -8,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.tabs.TabLayout;
 import com.sprout.R;
 import com.sprout.base.BaseActivity;
+import com.sprout.base.BaseAdapter;
 import com.sprout.interfaces.IBasePresenter;
 import com.sprout.interfaces.sort.ISort;
 import com.sprout.mode.data.CategoryListBean;
 import com.sprout.mode.data.CategoryTopBean;
 import com.sprout.presenter.sort.SortDetailPresenter;
+import com.sprout.ui.goods.GoodDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +37,12 @@ public class SortDetailActivity extends BaseActivity<ISort.DetailPresenter> impl
 
     int page=1,size=10;
 
+    int currentPos;
 
     List<CategoryListBean.DataBeanX.GoodsListBean> goodList;
     SortDetailAdapter sortDetailAdapter;
+
+    TabLayout.OnTabSelectedListener tabSelectedListener;
 
     @Override
     protected int getLayout() {
@@ -53,10 +59,12 @@ public class SortDetailActivity extends BaseActivity<ISort.DetailPresenter> impl
 
         topList = new ArrayList<>();
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabSelectedListener = new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                currentPos = tab.getPosition();
+                presenter.getCategoryList(topList.get(currentPos).getId(),page,size);
             }
 
             @Override
@@ -67,6 +75,17 @@ public class SortDetailActivity extends BaseActivity<ISort.DetailPresenter> impl
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        };
+
+
+        sortDetailAdapter.addListClick(new BaseAdapter.IListClick() {
+            @Override
+            public void itemClick(int pos) {
+               int goodid = goodList.get(pos).getId();
+                Intent intent = new Intent(SortDetailActivity.this, GoodDetailActivity.class);
+                intent.putExtra("goodid",goodid);
+                startActivity(intent);
             }
         });
     }
@@ -79,6 +98,7 @@ public class SortDetailActivity extends BaseActivity<ISort.DetailPresenter> impl
     @Override
     protected void initData() {
         int id = getIntent().getIntExtra("id",0);
+        currentPos = getIntent().getIntExtra("pos",0);
         //获取顶部的数据
         presenter.getCategoryTop(id);
     }
@@ -112,6 +132,10 @@ public class SortDetailActivity extends BaseActivity<ISort.DetailPresenter> impl
         for(CategoryTopBean.DataBean.BrotherCategoryBean item:topList){
             tabLayout.addTab(tabLayout.newTab().setText(item.getName()));
         }
-        presenter.getCategoryList(topList.get(0).getId(),page,size);
+        tabLayout.addOnTabSelectedListener(tabSelectedListener);
+        if(currentPos < topList.size()){
+           tabLayout.getTabAt(currentPos).select();
+        }
+
     }
 }

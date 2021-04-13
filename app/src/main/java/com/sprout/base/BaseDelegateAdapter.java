@@ -27,6 +27,8 @@ public abstract class BaseDelegateAdapter<D> extends DelegateAdapter.Adapter<Bas
     protected String title;
     Delegate delegate;
     protected D data;
+    protected View.OnClickListener itemListener;//点击事件的接口回调
+
     public BaseDelegateAdapter(Context context, List<D> list, Delegate delegate){
         this.context = context;
         this.list = list;
@@ -45,6 +47,24 @@ public abstract class BaseDelegateAdapter<D> extends DelegateAdapter.Adapter<Bas
         this.delegate = delegate;
     }
 
+    /**
+     * 刷新值
+     * @param data
+     */
+    public void refreshData(D data){
+        if(delegate == Delegate.OBJECT){
+            this.data = data;
+            notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 设置点击事件的接口回调
+     * @param listener
+     */
+    public void addEventListener(View.OnClickListener listener){
+        itemListener = listener;
+    }
 
 
     //页面的布局类型

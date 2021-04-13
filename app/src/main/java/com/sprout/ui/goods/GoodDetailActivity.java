@@ -1,5 +1,7 @@
 package com.sprout.ui.goods;
 
+import android.view.View;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
@@ -9,6 +11,8 @@ import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.goods.IGood;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.presenter.goods.GoodDetailPresenter;
+import com.sprout.ui.goods.adapters.DetailInfoAdapter;
+import com.sprout.ui.goods.adapters.DetailWebAdapter;
 
 import butterknife.BindView;
 
@@ -20,6 +24,12 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
     VirtualLayoutManager virtualLayoutManager;
     RecyclerView.RecycledViewPool viewPool;
     DelegateAdapter delegateAdapter;
+
+    GoodDetailBean.DataBeanX.InfoBean infoBean;
+    DetailInfoAdapter detailInfoAdapter;
+    //网页内容
+    DetailWebAdapter detailWebAdapter;
+
 
     @Override
     protected int getLayout() {
@@ -36,7 +46,17 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
         delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         recyDetail.setAdapter(delegateAdapter);
 
+        detailInfoAdapter = new DetailInfoAdapter(this,infoBean);
+        delegateAdapter.addAdapter(detailInfoAdapter);
+        detailInfoAdapter.addEventListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = (int) v.getTag();
+            }
+        });
 
+        detailWebAdapter = new DetailWebAdapter(this,infoBean);
+        delegateAdapter.addAdapter(detailWebAdapter);
     }
 
     @Override
@@ -56,6 +76,12 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
 
     @Override
     public void getGoodDetailReturn(GoodDetailBean result) {
-
+        if(result.getData() != null){
+            infoBean = result.getData().getInfo();
+            detailInfoAdapter.refreshData(infoBean);
+            detailInfoAdapter.notifyDataSetChanged();
+            detailWebAdapter.refreshData(infoBean);
+            detailWebAdapter.notifyDataSetChanged();
+        }
     }
 }

@@ -30,6 +30,6 @@ public class SortDetailAdapter extends BaseAdapter<CategoryListBean.DataBeanX.Go
         TextViewUtils.setTextView(data.getName(), (TextView) vh.getViewById(R.id.txt_name));
         String price = context.getResources().getString(R.string.price_word);
         price = price.replace(Constants.price_word,String.valueOf(data.getRetail_price()));
-        TextViewUtils.setTextView(price, (TextView) vh.getViewById(R.id.txt_name));
+        TextViewUtils.setTextView(price, (TextView) vh.getViewById(R.id.txt_price));
     }
 }

@@ -62,7 +62,7 @@ public interface ServiceApi {
      * @return
      */
     @GET("api/goods/list")
-    Flowable<CategoryListBean> getCategoryList(@Query("id") int id,@Query("page") int page,@Query("size") int size);
+    Flowable<CategoryListBean> getCategoryList(@Query("categoryId") int id,@Query("page") int page,@Query("size") int size);
 
     /**
      * 商品详情页

@@ -45,6 +45,8 @@ public class SortFragment extends BaseFragment<ISort.Presenter> implements ISort
     TabAdapter tabAdapter;
 
 
+    int currentPos; //当前分类的下标
+
     public static SortFragment getInstance(){
         return new SortFragment();
     }
@@ -63,9 +65,10 @@ public class SortFragment extends BaseFragment<ISort.Presenter> implements ISort
             @Override
             public void onItemClick(int pos) {
                 if(sortList.size() > pos){
-                    int id = sortList.get(pos).getId();
+                    int id = sortList.get(pos).getParent_id();
                     Intent intent = new Intent(mContext,SortDetailActivity.class);
                     intent.putExtra("id",id);
+                    intent.putExtra("pos",currentPos);
                     startActivity(intent);
                 }
             }
@@ -106,6 +109,7 @@ public class SortFragment extends BaseFragment<ISort.Presenter> implements ISort
         tabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
+                currentPos = position;
                 int id = tabs.get(position).getId();
                 presenter.getCatalogList(id);
             }

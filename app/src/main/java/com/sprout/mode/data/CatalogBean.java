@@ -1,5 +1,7 @@
 package com.sprout.mode.data;
 
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class CatalogBean {
