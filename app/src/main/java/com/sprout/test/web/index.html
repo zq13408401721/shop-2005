@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>html</head>
+    <title>title</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./main.css"/>
+    <style>
+        .div_col{
+            background-color: blue;
+        }
+
+        button{
+            color: brown;
+        }
+        
+        body{
+            margin: auto 100px;
+        }
+
+    </style>
+    <script>
+        
+        function loadComplete(){
+            var btn = document.getElementById("btn");
+            var txtInput = document.getElementById("txt_input");
+            btn.addEventListener("click",function(){
+                console.log("click");
+                var str = txtInput.value;
+                console.log(str);
+                tips.innerText = "你输入的是："+str;
+            });
+
+            var tips = document.getElementById("tips");
+
+            
+
+
+        }
+
+        function clickBtn(){
+            console.log("clickBtn");
+        }
+    </script>
+    <body onload="loadComplete()">
+        <img src="https://www.runoob.com/images/pulpit.jpg" width="100" height="100"/>
+        <label class="div_col">label</label>
+        <input id="txt_input" class="lab_color">
+        <div id="tips"></div>
+        <p class="lab_color">这是一个段落</p>
+        <button id="btn" name="btn_input" value="按钮">按钮</button>
+        //层
+        <div class="div_col">
+            第一个布局
+        </div>
+        <div>
+            第二个布局
+        </div>
+        <div style="background-color: aqua;">
+            <input >
+            输入框
+        </div>
+        <button>这是一个按钮</button>
+    </body>
+</html>
