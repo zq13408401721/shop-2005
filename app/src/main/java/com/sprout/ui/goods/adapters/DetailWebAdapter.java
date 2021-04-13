@@ -29,8 +29,7 @@ public class DetailWebAdapter extends BaseDelegateAdapter<GoodDetailBean.DataBea
             "                    margin: auto auto;\n" +
             "                }\n" +
             "                img{\n" +
-            "                    height: 100%;\n" +
-            "                    width: 100%;\n" +
+            "                    width: 100%;\n"+
             "                }\n" +
             "            </style>\n" +
             "            <body>\n" +
@@ -55,11 +54,9 @@ public class DetailWebAdapter extends BaseDelegateAdapter<GoodDetailBean.DataBea
     @Override
     protected void bindData(BaseDelegateAdapter.BaseViewHolder holder, GoodDetailBean.DataBeanX.InfoBean data) {
         if(data.getGoods_desc() == null || data.getGoods_desc().length() == 0) return;
-        String web = context.getResources().getString(R.string.good_web);
-        web.replace(Constants.web_content,data.getGoods_desc());
+        webContent = webContent.replace("content",data.getGoods_desc());
         WebView webView = (WebView) holder.getViewById(R.id.webView);
-        //webView.loadData(web,"text/html","utf-8");
-        webView.loadDataWithBaseURL("",web,"text/html","utf-8","");
+        webView.loadData(webContent,"text/html","utf-8");
 
     }
 }

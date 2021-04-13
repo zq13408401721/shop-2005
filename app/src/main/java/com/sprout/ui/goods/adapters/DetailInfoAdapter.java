@@ -32,7 +32,7 @@ public class DetailInfoAdapter extends BaseDelegateAdapter<GoodDetailBean.DataBe
     @Override
     protected void bindData(BaseDelegateAdapter.BaseViewHolder holder, GoodDetailBean.DataBeanX.InfoBean data) {
         TextViewUtils.setTextView(data.getName(), (TextView) holder.getViewById(R.id.txt_name));
-        TextViewUtils.setTextView(data.getGoods_desc(), (TextView) holder.getViewById(R.id.txt_desc));
+        TextViewUtils.setTextView(data.getGoods_brief(), (TextView) holder.getViewById(R.id.txt_desc));
         String price = context.getResources().getString(R.string.price_word);
         price = price.replace(Constants.price_word,String.valueOf(data.getRetail_price()));
         TextViewUtils.setTextView(price, (TextView) holder.getViewById(R.id.txt_price));
