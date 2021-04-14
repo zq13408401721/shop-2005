@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.sprout.R;
+import com.sprout.app.Constants;
 import com.sprout.base.BaseFragment;
 import com.sprout.interfaces.home.IHome;
 import com.sprout.mode.data.HomeBean;
 import com.sprout.presenter.home.HomePresenter;
+import com.sprout.ui.goods.GoodDetailActivity;
 import com.sprout.ui.goods.NewGoodsActivity;
 
 import java.util.ArrayList;
@@ -108,6 +110,17 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         newGoods = new ArrayList<>();
         newGoodAdapter = new NewGoodAdapter(mContext,newGoods);
         delegateAdapter.addAdapter(newGoodAdapter);
+
+        newGoodAdapter.addOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = (int) v.getTag();
+                HomeBean.DataBean.NewGoodsListBean bean = newGoods.get(pos);
+                Intent intent = new Intent(mContext, GoodDetailActivity.class);
+                intent.putExtra("goodid",bean.getId());
+                startActivityForResult(intent, Constants.PAGE_REQEST_CODE_GOODDETAIL);
+            }
+        });
 
         //热门
         hotTitleAdapter = new TitleAdapter(mContext,hotTitle);

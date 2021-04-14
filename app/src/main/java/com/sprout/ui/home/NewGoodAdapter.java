@@ -27,6 +27,10 @@ public class NewGoodAdapter extends DelegateAdapter.Adapter<NewGoodAdapter.ViewH
 
     Context context;
     List<HomeBean.DataBean.NewGoodsListBean> list;
+    View.OnClickListener onClickListener;
+    public void addOnClickListener(View.OnClickListener listener){
+        onClickListener = listener;
+    }
 
     public NewGoodAdapter(Context context, List<HomeBean.DataBean.NewGoodsListBean> list){
         this.context = context;
@@ -52,6 +56,8 @@ public class NewGoodAdapter extends DelegateAdapter.Adapter<NewGoodAdapter.ViewH
         TextViewUtils.setTextView(list.get(position).getName(),holder.txtNewGoodName);
         String price = Constants.price_word.replace("$",list.get(position).getRetail_price());
         TextViewUtils.setTextView(price,holder.txtNewGoodPrice);
+        holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(onClickListener);
     }
 
     @Override

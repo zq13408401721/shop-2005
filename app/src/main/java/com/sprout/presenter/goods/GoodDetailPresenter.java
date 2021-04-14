@@ -3,6 +3,7 @@ package com.sprout.presenter.goods;
 import com.sprout.base.BasePresenter;
 import com.sprout.interfaces.Callback;
 import com.sprout.interfaces.goods.IGood;
+import com.sprout.mode.car.CarBean;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.mode.goods.GoodDetailModel;
 
@@ -25,6 +26,23 @@ public class GoodDetailPresenter extends BasePresenter<IGood.View> implements IG
             public void success(GoodDetailBean goodDetailBean) {
                 if(mView != null){
                     mView.getGoodDetailReturn(goodDetailBean);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getCar() {
+        model.getCar(new Callback<CarBean>() {
+            @Override
+            public void fail(String msg) {
+
+            }
+
+            @Override
+            public void success(CarBean carBean) {
+                if(mView != null){
+                    mView.getCarReturn(carBean);
                 }
             }
         });

@@ -1,19 +1,26 @@
 package com.sprout.api;
 
 
+import androidx.constraintlayout.helper.widget.Flow;
+
+import com.sprout.mode.car.CarBean;
 import com.sprout.mode.data.CatalogBean;
 import com.sprout.mode.data.CatalogTabBean;
 import com.sprout.mode.data.CategoryListBean;
 import com.sprout.mode.data.CategoryTopBean;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.mode.data.HomeBean;
+import com.sprout.mode.data.LoginBean;
 import com.sprout.mode.data.NewGoodTopBean;
 import com.sprout.mode.data.NewGoodsBean;
 
 import java.util.Map;
 
 import io.reactivex.Flowable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -71,6 +78,21 @@ public interface ServiceApi {
      */
     @GET("api/goods/detail")
     Flowable<GoodDetailBean> getGoodDetail(@Query("id") int id);
+
+    /**
+     * 购物车数据
+     * @return
+     */
+    @GET("api/cart/index")
+    Flowable<CarBean> getCarData();
+
+
+    /**
+     * 登录
+     */
+    @POST("api/auth/login")
+    @FormUrlEncoded
+    Flowable<LoginBean> login(@Field("username") String username,@Field("password") String pw);
 
 
 }

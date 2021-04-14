@@ -10,4 +10,7 @@ public class Constants {
 
     public static String web_content;
 
+
+    public static final int PAGE_REQEST_CODE_GOODDETAIL = 1000; //商品购买详情
+
 }

@@ -1,17 +1,20 @@
 package com.sprout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sprout.app.Constants;
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.home.IMain;
 import com.sprout.ui.car.CarFragment;
@@ -127,13 +130,29 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        return super.dispatchTouchEvent(ev);
+    protected void onResume() {
+        super.onResume();
     }
 
-
+    /**
+     * 接收界面回传的方法
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.PAGE_REQEST_CODE_GOODDETAIL){
+            gotoCar();
+        }
+    }
+
+    private void gotoCar(){
+        currentItemId = R.id.menu_car;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction;
+        transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragmentbox,carFragment).commit();
     }
 }

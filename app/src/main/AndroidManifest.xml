@@ -44,6 +44,7 @@
         <activity android:name=".ui.goods.NewGoodsActivity" />
         <activity android:name=".ui.sort.SortDetailActivity"/>
         <activity android:name=".ui.goods.GoodDetailActivity" />
+        <activity android:name=".ui.login.LoginActivity"/>
     </application>
 
 </manifest>
