@@ -3,6 +3,7 @@ package com.sprout.mode.goods;
 import com.sprout.base.BaseModel;
 import com.sprout.interfaces.Callback;
 import com.sprout.interfaces.goods.IGood;
+import com.sprout.mode.car.AddCarBean;
 import com.sprout.mode.car.CarBean;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.mode.data.NewGoodsBean;
@@ -33,6 +34,19 @@ public class GoodDetailModel extends BaseModel implements IGood.Model {
                     @Override
                     public void onNext(CarBean carBean) {
                         callback.success(carBean);
+                    }
+                }));
+    }
+
+    @Override
+    public void addCar(int goodid, int number, int pid, Callback<AddCarBean> callback) {
+        addDisposable(HttpManager.getInstance().getService().addCar(goodid,number,pid).
+                compose(RxUtils.rxScheduler()).
+                subscribeWith(new CommonSubscriber<AddCarBean>(callback){
+
+                    @Override
+                    public void onNext(AddCarBean addCarBean) {
+                        callback.success(addCarBean);
                     }
                 }));
     }

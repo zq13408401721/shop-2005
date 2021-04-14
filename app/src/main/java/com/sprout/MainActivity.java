@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
@@ -126,12 +127,24 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
 
     @Override
     protected void initData() {
-
+        Intent intent = getIntent();
+        intent.putExtra("test",100);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent = getIntent();
+        if(intent != null){
+            if(intent.hasExtra("type")){
+                int type = intent.getIntExtra("type",0);
+                intent.removeExtra("type");
+                if(type == Constants.PAGE_REQEST_CODE_GOODDETAIL){
+                    gotoCar();
+                }
+            }
+        }
+        Log.i("TAG","onResume");
     }
 
     /**
@@ -143,16 +156,18 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("TAG",String.valueOf(requestCode));
         if(requestCode == Constants.PAGE_REQEST_CODE_GOODDETAIL){
             gotoCar();
         }
     }
 
     private void gotoCar(){
-        currentItemId = R.id.menu_car;
+        bottomNavigation.setSelectedItemId(R.id.menu_car);
+        /*currentItemId = R.id.menu_car;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction;
         transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragmentbox,carFragment).commit();
+        transaction.replace(R.id.fragmentbox,carFragment).commit();*/
     }
 }

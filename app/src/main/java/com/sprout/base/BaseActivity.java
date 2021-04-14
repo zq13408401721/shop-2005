@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.sprout.interfaces.IBasePresenter;
 import com.sprout.interfaces.IBaseView;
+import com.sprout.utils.ActivityTask;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -30,6 +31,7 @@ public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatAc
         super.onCreate(savedInstanceState);
         //需要界面view
         setContentView(getLayout());
+        ActivityTask.addActivity(this);
         unbinder = ButterKnife.bind(this);
         //初始化界面
         initView();
@@ -69,6 +71,7 @@ public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatAc
     public void showToast(String msg,int time){
         Toast.makeText(this, msg, time).show();
     }
+
 
     /**
      * 界面销毁

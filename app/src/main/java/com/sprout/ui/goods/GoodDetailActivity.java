@@ -1,27 +1,49 @@
 package com.sprout.ui.goods;
 
+import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.sprout.MainActivity;
 import com.sprout.R;
+import com.sprout.app.Constants;
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.goods.IGood;
+import com.sprout.mode.car.AddCarBean;
 import com.sprout.mode.car.CarBean;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.presenter.goods.GoodDetailPresenter;
 import com.sprout.ui.goods.adapters.DetailBuyBarAdapter;
 import com.sprout.ui.goods.adapters.DetailInfoAdapter;
 import com.sprout.ui.goods.adapters.DetailWebAdapter;
+import com.sprout.ui.login.LoginActivity;
+import com.sprout.utils.ActivityTask;
+import com.sprout.utils.SpUtils;
 
 import butterknife.BindView;
 
-public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements IGood.View {
+public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements IGood.View,View.OnClickListener {
 
     @BindView(R.id.recy_detail)
     RecyclerView recyDetail;
+    @BindView(R.id.img_collect)
+    ImageView imgCollect;
+    @BindView(R.id.layout_buy)
+    ConstraintLayout layoutBuy;
+    @BindView(R.id.txt_number)
+    TextView txtNumber;
+    @BindView(R.id.txt_car)
+    TextView txtCar;
+    @BindView(R.id.txt_buy)
+    TextView txtBuy;
+
+
 
     VirtualLayoutManager virtualLayoutManager;
     RecyclerView.RecycledViewPool viewPool;
@@ -36,6 +58,8 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
 
     //底部购买导航
     DetailBuyBarAdapter detailBuyBarAdapter;
+
+    GoodDetailBean goodDetail;
 
 
     @Override
@@ -65,9 +89,68 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
         detailWebAdapter = new DetailWebAdapter(this,infoBean);
         delegateAdapter.addAdapter(detailWebAdapter);
 
-        detailBuyBarAdapter = new DetailBuyBarAdapter(this,carBean);
+       /* detailBuyBarAdapter = new DetailBuyBarAdapter(this,carBean);
         delegateAdapter.addAdapter(detailBuyBarAdapter);
+        initDetailBuyBar();*/
 
+        initBottom();
+    }
+
+    private void initBottom(){
+        imgCollect.setOnClickListener(this);
+        layoutBuy.setOnClickListener(this);
+        txtCar.setOnClickListener(this);
+        txtBuy.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_collect:
+                collect();
+                break;
+            case R.id.layout_buy:
+            case R.id.txt_buy:
+                gotoCar();
+                break;
+            case R.id.txt_car:
+                joinCar();
+                break;
+        }
+    }
+
+    /**
+     * 收藏
+     */
+    private void collect(){
+        if(goodDetail != null){
+            int goodId = goodDetail.getData().getInfo().getId();
+            boolean bool = SpUtils.getInstance().getBoolean(String.valueOf(goodId));
+            int rid;
+            if(bool){
+                SpUtils.getInstance().remove(String.valueOf(goodId));
+                rid = R.mipmap.ic_uncollect;
+            }else{
+                SpUtils.getInstance().setValue(String.valueOf(goodId),true);
+                rid = R.mipmap.ic_collect;
+            }
+            imgCollect.setImageResource(rid);
+        }
+    }
+
+    /**
+     * 加入购物车
+     */
+    private void joinCar(){
+        String token = SpUtils.getInstance().getString("token");
+        if(token != null && token.length() > 0){
+
+        }else{
+            //去注册登录
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void initDetailBuyBar(){
@@ -90,7 +173,11 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
     }
 
     private void gotoCar(){
-        finish();
+        //通过栈内复用的方式打开mainactivity 异常其他所有的activity
+        /*Intent intent = new Intent(GoodDetailActivity.this, MainActivity.class);
+        intent.putExtra("type", Constants.PAGE_REQEST_CODE_GOODDETAIL);
+        startActivity(intent);*/
+        ActivityTask.gotoMainActivity(Constants.PAGE_REQEST_CODE_GOODDETAIL);
     }
 
     @Override
@@ -111,14 +198,23 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
 
     @Override
     public void getGoodDetailReturn(GoodDetailBean result) {
+        goodDetail = result;
         if(result.getData() != null){
+
+            /**
+             * 收藏状态
+             */
+            boolean bool = SpUtils.getInstance().getBoolean(String.valueOf(result.getData().getInfo().getId()));
+            int rid = bool ? R.mipmap.ic_collect : R.mipmap.ic_uncollect;
+            imgCollect.setImageResource(rid);
+
             infoBean = result.getData().getInfo();
             detailInfoAdapter.refreshData(infoBean);
             detailInfoAdapter.notifyDataSetChanged();
             detailWebAdapter.refreshData(infoBean);
             detailWebAdapter.notifyDataSetChanged();
 
-            detailBuyBarAdapter.setCurrentGoodId(result.getData().getInfo().getId());
+            //detailBuyBarAdapter.setCurrentGoodId(result.getData().getInfo().getId());
         }
     }
 
@@ -129,5 +225,14 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
     @Override
     public void getCarReturn(CarBean result) {
 
+    }
+
+    /**
+     * 添加购物车返回
+     * @param result
+     */
+    @Override
+    public void addCarReturn(AddCarBean result) {
+        gotoCar();
     }
 }

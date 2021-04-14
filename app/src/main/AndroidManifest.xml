@@ -40,7 +40,8 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.goods.NewGoodsActivity" />
         <activity android:name=".ui.sort.SortDetailActivity"/>
         <activity android:name=".ui.goods.GoodDetailActivity" />

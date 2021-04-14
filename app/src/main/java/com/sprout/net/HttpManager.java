@@ -3,6 +3,7 @@ package com.sprout.net;
 import android.util.Log;
 
 import com.sprout.api.ServiceApi;
+import com.sprout.utils.SpUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -81,12 +82,13 @@ public class HttpManager {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request().newBuilder()
-                    .addHeader("ACCESS_TOKEN","x0U9TTgwBTiGglcd2NGF0p6W32hHHZTRqfuD")
+                    /*.addHeader("ACCESS_TOKEN","x0U9TTgwBTiGglcd2NGF0p6W32hHHZTRqfuD")
                     .addHeader("APP_VERSION","2.4.6")
                     .addHeader("DEVICE_ID","869765024799023")
                     .addHeader("MC","vvJrdl_v01")
                     .addHeader("OS_VERSION","5.1.1")
-                    .addHeader("PLATFORM","Android")
+                    .addHeader("PLATFORM","Android")*/
+                    .addHeader("X-Nideshop-Token", SpUtils.getInstance().getString("token"))
                     .build();
             return chain.proceed(request);
         }
