@@ -4,6 +4,7 @@ import com.sprout.base.BasePresenter;
 import com.sprout.interfaces.Callback;
 import com.sprout.interfaces.goods.IGood;
 import com.sprout.mode.data.AddCarBean;
+import com.sprout.mode.data.CarBean;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.mode.goods.GoodDetailModel;
 

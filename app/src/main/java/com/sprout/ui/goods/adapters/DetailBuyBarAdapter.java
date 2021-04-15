@@ -11,6 +11,7 @@ import com.alibaba.android.vlayout.layout.FixLayoutHelper;
 import com.sprout.R;
 import com.sprout.app.Delegate;
 import com.sprout.base.BaseDelegateAdapter;
+import com.sprout.mode.data.CarBean;
 import com.sprout.utils.SpUtils;
 
 public class DetailBuyBarAdapter extends BaseDelegateAdapter<CarBean> {

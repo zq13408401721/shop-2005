@@ -51,6 +51,11 @@ public class NumSelector extends LinearLayout implements View.OnClickListener {
 
     }
 
+    public void updateNumber(int num){
+        number = num;
+        txtNum.setText(String.valueOf(number));
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -67,7 +72,7 @@ public class NumSelector extends LinearLayout implements View.OnClickListener {
     private void reduce(){
         number--;
         number = number <= 0 ? 1 : number;
-        txtReduce.setText(number);
+        txtNum.setText(String.valueOf(number));
         if(numberUpdate != null){
             numberUpdate.update(number);
         }
@@ -75,7 +80,7 @@ public class NumSelector extends LinearLayout implements View.OnClickListener {
 
     private void add(){
         number ++;
-        txtAdd.setText(number);
+        txtNum.setText(String.valueOf(number));
         if(numberUpdate != null){
             numberUpdate.update(number);
         }

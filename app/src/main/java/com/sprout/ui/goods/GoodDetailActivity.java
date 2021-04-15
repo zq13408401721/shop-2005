@@ -16,6 +16,7 @@ import com.sprout.app.Constants;
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.goods.IGood;
 import com.sprout.mode.data.AddCarBean;
+import com.sprout.mode.data.CarBean;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.presenter.goods.GoodDetailPresenter;
 import com.sprout.ui.goods.adapters.DetailBuyBarAdapter;
@@ -23,6 +24,7 @@ import com.sprout.ui.goods.adapters.DetailInfoAdapter;
 import com.sprout.ui.goods.adapters.DetailWebAdapter;
 import com.sprout.ui.login.LoginActivity;
 import com.sprout.utils.ActivityTask;
+import com.sprout.utils.DisplayUtils;
 import com.sprout.utils.SpUtils;
 import com.sprout.widget.BuySelectorWindow;
 
@@ -109,7 +111,8 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
 
     private void showBuyPopwindow(View v){
         buySelectorWindow = new BuySelectorWindow(GoodDetailActivity.this);
-        buySelectorWindow.showAtLocation(v, Gravity.BOTTOM,0,0);
+        int d = DisplayUtils.dp2px(this,60);
+        buySelectorWindow.showAtLocation(v, Gravity.BOTTOM,0,d);
     }
 
     @Override
@@ -120,7 +123,11 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
                 break;
             case R.id.layout_buy:
             case R.id.txt_buy:
-                selectBuy();
+                if(buySelectorWindow == null){
+                    showBuyPopwindow(v);
+                }else{
+                    selectBuy();
+                }
                 break;
             case R.id.txt_car:
                 joinCar();
