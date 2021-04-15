@@ -4,6 +4,7 @@ import com.sprout.R;
 import com.sprout.base.BaseFragment;
 import com.sprout.interfaces.car.ICar;
 import com.sprout.interfaces.home.IHome;
+import com.sprout.mode.data.CarBean;
 import com.sprout.mode.data.HomeBean;
 import com.sprout.presenter.car.CarPresenter;
 import com.sprout.presenter.home.HomePresenter;
@@ -30,7 +31,11 @@ public class CarFragment extends BaseFragment<ICar.Presenter> implements ICar.Vi
 
     @Override
     public void initData() {
-
+        presenter.getCarList();
     }
 
+    @Override
+    public void getCarListReturn(CarBean carBean) {
+        
+    }
 }

@@ -4,13 +4,9 @@ import com.sprout.interfaces.Callback;
 import com.sprout.interfaces.IBasePresenter;
 import com.sprout.interfaces.IBaseView;
 import com.sprout.interfaces.IModel;
-import com.sprout.mode.car.AddCarBean;
-import com.sprout.mode.car.CarBean;
+import com.sprout.mode.data.AddCarBean;
+import com.sprout.mode.data.CarBean;
 import com.sprout.mode.data.GoodDetailBean;
-import com.sprout.mode.data.NewGoodTopBean;
-import com.sprout.mode.data.NewGoodsBean;
-
-import java.util.Map;
 
 public interface IGood {
     interface View extends IBaseView {

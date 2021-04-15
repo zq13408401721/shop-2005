@@ -1,12 +1,13 @@
-package com.sprout.mode.car;
+package com.sprout.mode.data;
 
 import java.util.List;
 
-public class CarBean {
+public class AddCarBean {
+
     /**
      * errno : 0
      * errmsg :
-     * data : {"cartList":[{"id":3310,"user_id":5,"session_id":"1","goods_id":1021004,"goods_sn":"1021004","product_id":29,"goods_name":"澳洲羊羔毛AB面盖毯","market_price":299,"retail_price":299,"number":4,"goods_specifition_name_value":"","goods_specifition_ids":"","checked":1,"list_pic_url":"http://yanxuan.nosdn.127.net/654b02045fde802b51d5bbf09a8b75f2.png"}],"cartTotal":{"goodsCount":4,"goodsAmount":1196,"checkedGoodsCount":4,"checkedGoodsAmount":1196}}
+     * data : {"cartList":[{"id":3704,"user_id":7,"session_id":"1","goods_id":1009024,"goods_sn":"1009024","product_id":16,"goods_name":"日式和风懒人沙发","market_price":599,"retail_price":599,"number":2,"goods_specifition_name_value":"","goods_specifition_ids":"","checked":1,"list_pic_url":"http://yanxuan.nosdn.127.net/149dfa87a7324e184c5526ead81de9ad.png"}],"cartTotal":{"goodsCount":2,"goodsAmount":1198,"checkedGoodsCount":2,"checkedGoodsAmount":1198}}
      */
 
     private int errno;
@@ -39,8 +40,8 @@ public class CarBean {
 
     public static class DataBean {
         /**
-         * cartList : [{"id":3310,"user_id":5,"session_id":"1","goods_id":1021004,"goods_sn":"1021004","product_id":29,"goods_name":"澳洲羊羔毛AB面盖毯","market_price":299,"retail_price":299,"number":4,"goods_specifition_name_value":"","goods_specifition_ids":"","checked":1,"list_pic_url":"http://yanxuan.nosdn.127.net/654b02045fde802b51d5bbf09a8b75f2.png"}]
-         * cartTotal : {"goodsCount":4,"goodsAmount":1196,"checkedGoodsCount":4,"checkedGoodsAmount":1196}
+         * cartList : [{"id":3704,"user_id":7,"session_id":"1","goods_id":1009024,"goods_sn":"1009024","product_id":16,"goods_name":"日式和风懒人沙发","market_price":599,"retail_price":599,"number":2,"goods_specifition_name_value":"","goods_specifition_ids":"","checked":1,"list_pic_url":"http://yanxuan.nosdn.127.net/149dfa87a7324e184c5526ead81de9ad.png"}]
+         * cartTotal : {"goodsCount":2,"goodsAmount":1198,"checkedGoodsCount":2,"checkedGoodsAmount":1198}
          */
 
         private CartTotalBean cartTotal;
@@ -64,10 +65,10 @@ public class CarBean {
 
         public static class CartTotalBean {
             /**
-             * goodsCount : 4
-             * goodsAmount : 1196
-             * checkedGoodsCount : 4
-             * checkedGoodsAmount : 1196
+             * goodsCount : 2
+             * goodsAmount : 1198
+             * checkedGoodsCount : 2
+             * checkedGoodsAmount : 1198
              */
 
             private int goodsCount;
@@ -110,20 +111,20 @@ public class CarBean {
 
         public static class CartListBean {
             /**
-             * id : 3310
-             * user_id : 5
+             * id : 3704
+             * user_id : 7
              * session_id : 1
-             * goods_id : 1021004
-             * goods_sn : 1021004
-             * product_id : 29
-             * goods_name : 澳洲羊羔毛AB面盖毯
-             * market_price : 299
-             * retail_price : 299
-             * number : 4
+             * goods_id : 1009024
+             * goods_sn : 1009024
+             * product_id : 16
+             * goods_name : 日式和风懒人沙发
+             * market_price : 599
+             * retail_price : 599
+             * number : 2
              * goods_specifition_name_value :
              * goods_specifition_ids :
              * checked : 1
-             * list_pic_url : http://yanxuan.nosdn.127.net/654b02045fde802b51d5bbf09a8b75f2.png
+             * list_pic_url : http://yanxuan.nosdn.127.net/149dfa87a7324e184c5526ead81de9ad.png
              */
 
             private int id;

@@ -1,6 +1,7 @@
 package com.sprout.ui.goods;
 
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,13 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
-import com.sprout.MainActivity;
 import com.sprout.R;
 import com.sprout.app.Constants;
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.goods.IGood;
-import com.sprout.mode.car.AddCarBean;
-import com.sprout.mode.car.CarBean;
+import com.sprout.mode.data.AddCarBean;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.presenter.goods.GoodDetailPresenter;
 import com.sprout.ui.goods.adapters.DetailBuyBarAdapter;
@@ -25,6 +24,7 @@ import com.sprout.ui.goods.adapters.DetailWebAdapter;
 import com.sprout.ui.login.LoginActivity;
 import com.sprout.utils.ActivityTask;
 import com.sprout.utils.SpUtils;
+import com.sprout.widget.BuySelectorWindow;
 
 import butterknife.BindView;
 
@@ -60,6 +60,7 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
     DetailBuyBarAdapter detailBuyBarAdapter;
 
     GoodDetailBean goodDetail;
+    BuySelectorWindow buySelectorWindow;
 
 
     @Override
@@ -83,6 +84,7 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
             @Override
             public void onClick(View v) {
                 int id = (int) v.getTag();
+                showBuyPopwindow(v);
             }
         });
 
@@ -104,6 +106,12 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
 
     }
 
+
+    private void showBuyPopwindow(View v){
+        buySelectorWindow = new BuySelectorWindow(GoodDetailActivity.this);
+        buySelectorWindow.showAtLocation(v, Gravity.BOTTOM,0,0);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -112,7 +120,7 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
                 break;
             case R.id.layout_buy:
             case R.id.txt_buy:
-                gotoCar();
+                selectBuy();
                 break;
             case R.id.txt_car:
                 joinCar();
@@ -136,6 +144,18 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
                 rid = R.mipmap.ic_collect;
             }
             imgCollect.setImageResource(rid);
+        }
+    }
+
+    private void selectBuy(){
+        if(buySelectorWindow != null && goodDetail != null){
+            int number = buySelectorWindow.getNumber();
+            if(goodDetail.getData().getProductList().size() > 0){
+                int goodsid = goodDetail.getData().getProductList().get(0).getGoods_id();
+                int productid = goodDetail.getData().getProductList().get(0).getId();
+                presenter.addCar(goodsid,number,productid);
+            }
+
         }
     }
 
@@ -192,7 +212,6 @@ public class GoodDetailActivity extends BaseActivity<IGood.Presenter> implements
 
         }else{
             presenter.getGoodDetail(id);
-
         }
     }
 

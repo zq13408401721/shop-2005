@@ -1,10 +1,8 @@
 package com.sprout.api;
 
 
-import androidx.constraintlayout.helper.widget.Flow;
-
-import com.sprout.mode.car.AddCarBean;
-import com.sprout.mode.car.CarBean;
+import com.sprout.mode.data.AddCarBean;
+import com.sprout.mode.data.CarBean;
 import com.sprout.mode.data.CatalogBean;
 import com.sprout.mode.data.CatalogTabBean;
 import com.sprout.mode.data.CategoryListBean;
@@ -21,7 +19,6 @@ import io.reactivex.Flowable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -106,6 +103,15 @@ public interface ServiceApi {
     @POST("api/cart/add")
     @FormUrlEncoded
     Flowable<AddCarBean> addCar(@Field("goodsId") int goodid,@Field("number") int number,@Field("productId") int pid);
+
+
+    /**
+     * 获取购物车
+     * @return
+     */
+    @GET("/api/cart/index")
+    Flowable<CarBean> getCarList();
+
 
 
 }

@@ -8,13 +8,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.FixLayoutHelper;
-import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.sprout.R;
 import com.sprout.app.Delegate;
 import com.sprout.base.BaseDelegateAdapter;
-import com.sprout.mode.car.CarBean;
 import com.sprout.utils.SpUtils;
-import com.sprout.utils.TextViewUtils;
 
 public class DetailBuyBarAdapter extends BaseDelegateAdapter<CarBean> {
 
