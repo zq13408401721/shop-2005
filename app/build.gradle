@@ -12,14 +12,12 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
 
     buildTypes {
         release {
-
             buildConfigField('String','ServerAddress',rootProject.ext.configField['ServerAddress_release'])
             buildConfigField('String','APPName',rootProject.ext.configField['APPName_release'])
             minifyEnabled false
@@ -89,5 +87,8 @@ dependencies {
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
 
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+
+    // 添加下面的内容
+    implementation (name: 'alipaysdk', ext: 'aar')
 
 }

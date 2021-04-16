@@ -2,6 +2,7 @@ package com.sprout.api;
 
 
 import com.sprout.mode.data.AddCarBean;
+import com.sprout.mode.data.AlipayBean;
 import com.sprout.mode.data.CarBean;
 import com.sprout.mode.data.CatalogBean;
 import com.sprout.mode.data.CatalogTabBean;
@@ -146,6 +147,15 @@ public interface ServiceApi {
     @POST("wxorder")
     @FormUrlEncoded
     Flowable<WXOrderBean> wxOrder(@Field("paytype") int type);
+
+    /**
+     * 获取alipay的订单
+     * @param type
+     * @return
+     */
+    @POST("alipayorder")
+    @FormUrlEncoded
+    Flowable<AlipayBean> alipayOrder(@Field("paytype") int type);
 
 
 
