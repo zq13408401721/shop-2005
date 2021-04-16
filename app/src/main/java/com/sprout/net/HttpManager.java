@@ -40,6 +40,8 @@ public class HttpManager {
 
     private ServiceApi serviceApi;
 
+    private ServiceApi payApi;
+
 
     private Map<String,Retrofit> map = new HashMap<>();  //retrofit请求对象的对象池
 
@@ -103,6 +105,18 @@ public class HttpManager {
             serviceApi = getRetrofit(ServiceApi.BASE_URL).create(ServiceApi.class);
         }
         return serviceApi;
+    }
+
+
+    /**
+     * 微信支付
+     * @return
+     */
+    public ServiceApi getPayService(){
+        if(payApi == null){
+            payApi = getRetrofit(ServiceApi.BASE_PAY_URL).create(ServiceApi.class);
+        }
+        return payApi;
     }
 
 }

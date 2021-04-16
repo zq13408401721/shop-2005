@@ -7,16 +7,20 @@ import com.sprout.mode.data.CatalogBean;
 import com.sprout.mode.data.CatalogTabBean;
 import com.sprout.mode.data.CategoryListBean;
 import com.sprout.mode.data.CategoryTopBean;
+import com.sprout.mode.data.DeleteCarBean;
 import com.sprout.mode.data.GoodDetailBean;
 import com.sprout.mode.data.HomeBean;
 import com.sprout.mode.data.LoginBean;
 import com.sprout.mode.data.NewGoodTopBean;
 import com.sprout.mode.data.NewGoodsBean;
+import com.sprout.mode.data.UpdateCarBean;
+import com.sprout.mode.data.WXOrderBean;
 
 import java.util.Map;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -25,6 +29,8 @@ import retrofit2.http.QueryMap;
 
 public interface ServiceApi {
     String BASE_URL = "https://cdplay.cn/";
+
+    String BASE_PAY_URL = "http://cdwan.cn:9000/";
 
 
     @GET("api/index")
@@ -111,6 +117,35 @@ public interface ServiceApi {
      */
     @GET("/api/cart/index")
     Flowable<CarBean> getCarList();
+
+
+    /**
+     * 更新购物车数据
+     * @param map  goodsId  productId number id(购物车的ID)
+     * @return
+     */
+    @POST("api/cart/update")
+    @FormUrlEncoded
+    Flowable<UpdateCarBean> updateCar(@FieldMap Map<String,String> map);
+
+    /**
+     * 删除购物车数据
+     * @param ids
+     * @return
+     */
+    @POST("api/cart/delete")
+    @FormUrlEncoded
+    Flowable<DeleteCarBean> deleteCar(@Field("productIds") String ids);
+
+
+    /**
+     * 微信订单
+     * @param type
+     * @return
+     */
+    @POST("wxorder")
+    @FormUrlEncoded
+    Flowable<WXOrderBean> wxOrder(@Field("paytype") int type);
 
 
 

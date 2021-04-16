@@ -65,6 +65,9 @@ public class CarListAdapter extends BaseAdapter<CarBean.DataBean.CartListBean> {
                 public void update(int num) {
                     data.setNumber(num);
                     //更新服务器的商品数量
+                    if(checkBoxChange != null){
+                        checkBoxChange.updateCarInfo(data);
+                    }
                 }
             });
         }else{
@@ -94,5 +97,8 @@ public class CarListAdapter extends BaseAdapter<CarBean.DataBean.CartListBean> {
 
     public interface ICheckBoxChange{
         void update(CarBean.DataBean.CartListBean data,boolean select);
+
+        void updateCarInfo(CarBean.DataBean.CartListBean data);
+
     }
 }

@@ -1,9 +1,11 @@
 package com.sprout.ui.car;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,16 +15,23 @@ import com.sprout.base.BaseFragment;
 import com.sprout.interfaces.car.ICar;
 import com.sprout.interfaces.home.IHome;
 import com.sprout.mode.data.CarBean;
+import com.sprout.mode.data.DeleteCarBean;
 import com.sprout.mode.data.HomeBean;
+import com.sprout.mode.data.UpdateCarBean;
 import com.sprout.presenter.car.CarPresenter;
 import com.sprout.presenter.home.HomePresenter;
 import com.sprout.ui.mine.MineFragment;
+import com.sprout.ui.pay.PayActivity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class CarFragment extends BaseFragment<ICar.Presenter> implements ICar.View {
 
@@ -45,6 +54,8 @@ public class CarFragment extends BaseFragment<ICar.Presenter> implements ICar.Vi
     List<CarBean.DataBean.CartListBean> list;
     CarListAdapter carListAdapter;
 
+    List<Integer> deleteIds; //把删除的IDS缓存下来
+
     public static CarFragment getInstance(){
         return new CarFragment();
     }
@@ -55,6 +66,7 @@ public class CarFragment extends BaseFragment<ICar.Presenter> implements ICar.Vi
 
     @Override
     public void initView() {
+        deleteIds = new ArrayList<>();
         list = new ArrayList<>();
         carListAdapter = new CarListAdapter(mContext,list);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -78,6 +90,20 @@ public class CarFragment extends BaseFragment<ICar.Presenter> implements ICar.Vi
             public void update(CarBean.DataBean.CartListBean data, boolean select) {
                 countSelect();
                 updateTotal();
+            }
+
+            /**
+             * 更新商品的信息
+             * @param data
+             */
+            @Override
+            public void updateCarInfo(CarBean.DataBean.CartListBean data) {
+                Map<String,String> map = new HashMap<>();
+                map.put("goodsId",String.valueOf(data.getGoods_id()));
+                map.put("productId",String.valueOf(data.getProduct_id()));
+                map.put("id",String.valueOf(data.getId()));
+                map.put("number",String.valueOf(data.getNumber()));
+                presenter.udpateCar(map);
             }
         });
         txtEdit.setOnClickListener(new View.OnClickListener() {
@@ -103,9 +129,25 @@ public class CarFragment extends BaseFragment<ICar.Presenter> implements ICar.Vi
         txtSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(txtSubmit.getText().toString().equals("删除所选")){
+                    getSelectItem();
+                    deleteGoods();
+                }else{
+                    Intent intent = new Intent(mContext, PayActivity.class);
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    private void getSelectItem(){
+        for (CarBean.DataBean.CartListBean item:list) {
+            if(isEdit){
+                if(item.editselect){
+                    deleteIds.add(item.getProduct_id());
+                }
+            }
+        }
     }
 
     /**
@@ -229,6 +271,31 @@ public class CarFragment extends BaseFragment<ICar.Presenter> implements ICar.Vi
         presenter.getCarList();
     }
 
+    /**
+     * 删除所选商品
+     */
+    private void deleteGoods(){
+        if(deleteIds.size() > 0){
+            StringBuilder sb = new StringBuilder();
+            for(Integer id:deleteIds){
+                sb.append(id);
+                sb.append(",");
+            }
+            if(sb.length() > 0){
+                sb.deleteCharAt(sb.length()-1);
+            }
+            deleteIds.clear();
+            presenter.deleteCar(sb.toString());
+        }
+    }
+
+    /**
+     * 订单页面
+     */
+    private void gotoOrderPage(){
+
+    }
+
     @Override
     public void getCarListReturn(CarBean carBean) {
         total = 0;
@@ -238,5 +305,49 @@ public class CarFragment extends BaseFragment<ICar.Presenter> implements ICar.Vi
             list.addAll(carBean.getData().getCartList());
             carListAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void updateCarReturn(UpdateCarBean result) {
+        if(result.getData() != null){
+            Toast.makeText(mContext,"商品更新成功",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 删除所选
+     * @param result
+     */
+    @Override
+    public void deleteCarReturn(DeleteCarBean result) {
+        int length = list.size();
+        for(int i=length-1; i>=0; i--){
+            boolean  bool = checkedGoods(list.get(i),result.getData().getCartList());
+            if(!bool){
+                list.remove(i);
+            }
+        }
+        carListAdapter.notifyDataSetChanged();
+
+       /* for(int i=0; i<length; i++){
+            boolean  bool = checkedGoods(list.get(i),result.getData().getCartList());
+            if(!bool){
+                list.remove(i);
+                i--;
+                length--;
+            }
+        }*/
+
+
+
+    }
+
+    private boolean checkedGoods(CarBean.DataBean.CartListBean item,List<DeleteCarBean.DataBean.CartListBean> carList){
+        for(DeleteCarBean.DataBean.CartListBean bean:carList){
+            if(bean.getId() == item.getId()){
+                return true;
+            }
+        }
+        return false;
     }
 }

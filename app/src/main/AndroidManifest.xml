@@ -46,6 +46,15 @@
         <activity android:name=".ui.sort.SortDetailActivity"/>
         <activity android:name=".ui.goods.GoodDetailActivity" />
         <activity android:name=".ui.login.LoginActivity"/>
+        <activity android:name=".ui.pay.PayActivity"
+            android:launchMode="singleTask"/>
+        <!--微信支付-->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:taskAffinity="com.sprout"
+            android:launchMode="singleTask"/>
+
+
     </application>
 
 </manifest>

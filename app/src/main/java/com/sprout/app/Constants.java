@@ -13,4 +13,8 @@ public class Constants {
 
     public static final int PAGE_REQEST_CODE_GOODDETAIL = 1000; //商品购买详情
 
+
+    public static final String WX_APPID = "wx0dc7c1fa36761c64"; //appid
+    public static final String WX_PARTNERID = "1607146819";  //商户号
+
 }
