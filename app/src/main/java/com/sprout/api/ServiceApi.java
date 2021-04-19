@@ -15,6 +15,7 @@ import com.sprout.mode.data.LoginBean;
 import com.sprout.mode.data.NewGoodTopBean;
 import com.sprout.mode.data.NewGoodsBean;
 import com.sprout.mode.data.UpdateCarBean;
+import com.sprout.mode.data.UpdateUserInfoBean;
 import com.sprout.mode.data.WXOrderBean;
 
 import java.util.Map;
@@ -157,6 +158,11 @@ public interface ServiceApi {
     @FormUrlEncoded
     Flowable<AlipayBean> alipayOrder(@Field("paytype") int type);
 
-
+    /**
+     * 更新用户信息
+     */
+    @POST("api/user/updateUserInfo")
+    @FormUrlEncoded
+    Flowable<UpdateUserInfoBean> updateUserInfo(@FieldMap Map<String,String> map);
 
 }

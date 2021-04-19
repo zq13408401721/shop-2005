@@ -53,6 +53,8 @@
             android:taskAffinity="com.sprout"
             android:launchMode="singleInstance"/>
 
+        <activity android:name=".ui.mine.UserInfoActivity"/>
+
 
     </application>
 

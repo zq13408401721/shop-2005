@@ -8,10 +8,13 @@ android {
 
     defaultConfig {
         applicationId "com.sprout"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+
+        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -90,5 +93,10 @@ dependencies {
 
     // 添加下面的内容
     implementation (name: 'alipaysdk', ext: 'aar')
+
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
+
+    //oss
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
 
 }

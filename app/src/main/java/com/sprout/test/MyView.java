@@ -1,6 +1,8 @@
 package com.sprout.test;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,5 +36,10 @@ public class MyView extends androidx.appcompat.widget.AppCompatTextView {
         MyLog.log(event,"View","onTouchEvent");
         //return super.onTouchEvent(event);
         return true;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
     }
 }
