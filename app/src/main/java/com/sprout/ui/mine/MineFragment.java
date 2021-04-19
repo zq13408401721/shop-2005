@@ -13,6 +13,7 @@ import com.sprout.interfaces.car.ICar;
 import com.sprout.interfaces.mine.IMine;
 import com.sprout.presenter.car.CarPresenter;
 import com.sprout.presenter.mine.MinePresenter;
+import com.sprout.ui.login.LoginActivity;
 import com.sprout.ui.setting.SettingActivity;
 import com.sprout.utils.ImageLoader;
 import com.sprout.utils.SpUtils;
@@ -41,6 +42,12 @@ public class MineFragment extends BaseFragment<IMine.Presenter> implements IMine
 
     @Override
     public void initView() {
+        String uid = SpUtils.getInstance().getString("uid");
+        if(uid == null ||  uid.isEmpty()){
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
         String head = SpUtils.getInstance().getString("avatar");
         String nickname = SpUtils.getInstance().getString("nickname");
         RoundedCorners roundedCorners = new RoundedCorners(40);

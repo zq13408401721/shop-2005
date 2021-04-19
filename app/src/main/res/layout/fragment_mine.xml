@@ -30,4 +30,5 @@
         android:layout_marginLeft="10dp"
         android:text="nickname"
         android:textSize="18sp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

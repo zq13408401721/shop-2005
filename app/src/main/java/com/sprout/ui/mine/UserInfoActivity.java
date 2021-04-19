@@ -60,8 +60,8 @@ public class UserInfoActivity extends BaseActivity<IMine.UserPresenter> implemen
     /*********oss 文件上传*****************/
     String bucketName = "sprout-app";
     String ossPoint = "http://oss-cn-beijing.aliyuncs.com";
-    String key = "LTAI4G1JvHB2FsXvDYMfY56i"; //appkey
-    String secret = "gIwhFC9Sk4JEkfFR2mkcOz2Uwr6Vid"; //密码
+    String key = "LTAI5t7afAVVFZq84X6puaqa"; //appkey
+    String secret = "K4t5BRAiSttIk9HNR8D1z1itxb1oiR"; //密码
     OSSClient ossClient; //ossclient对象
 
     @Override
@@ -176,7 +176,8 @@ public class UserInfoActivity extends BaseActivity<IMine.UserPresenter> implemen
     private void uploadBitmap(Bitmap bmp){
         byte[] bts = ImageLoader.getBytesByBitmap(bmp);
         String uid = SpUtils.getInstance().getString("uid");
-        String filename = uid+"/"+String.valueOf(System.currentTimeMillis())+String.valueOf(Math.random()*1000000)+".png";
+        uid = "admin";
+        String filename = uid+"/"+System.currentTimeMillis()/1000+Math.random()*10000+".png";
 
         PutObjectRequest put = new PutObjectRequest(bucketName, filename, bts);
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
