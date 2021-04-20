@@ -2,11 +2,13 @@ package com.sprout.ui.home;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.google.zxing.activity.CaptureActivity;
 import com.sprout.R;
 import com.sprout.app.Constants;
 import com.sprout.base.BaseFragment;
@@ -21,10 +23,12 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome.View {
+public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome.View, View.OnClickListener {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
+    @BindView(R.id.img_scan)
+    ImageView imgScan;
 
     VirtualLayoutManager virtualLayoutManager;
     RecyclerView.RecycledViewPool viewPool;
@@ -33,8 +37,13 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
     List<HomeBean.DataBean.BannerBean> banners;
     BannerAdapter bannerAdapter;
 
+    //上下轮番广告ViewFlipper
+    List<String> flipperList;
+    FlipperAdapter flipperAdapter;
+
     List<HomeBean.DataBean.ChannelBean> channels;
     ChannelAdapter channelAdapter;
+
 
     //品牌标题
     String brandTitle="品牌制造商直供";
@@ -70,6 +79,9 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
 
     @Override
     public void initView() {
+
+        imgScan.setOnClickListener(this);
+
         virtualLayoutManager = new VirtualLayoutManager(mContext);
         recyclerView.setLayoutManager(virtualLayoutManager);
         viewPool = new RecyclerView.RecycledViewPool();
@@ -86,6 +98,13 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
         channels = new ArrayList<>();
         channelAdapter = new ChannelAdapter(mContext,channels);
         delegateAdapter.addAdapter(channelAdapter);
+
+        flipperList = new ArrayList<>();
+        flipperList.add("这是头条新闻");
+        flipperList.add("这是普通新闻");
+        flipperList.add("这是腾讯新闻");
+        flipperAdapter = new FlipperAdapter(mContext,flipperList);
+        delegateAdapter.addAdapter(flipperAdapter);
 
         titleAdapter = new TitleAdapter(mContext,brandTitle);
         delegateAdapter.addAdapter(titleAdapter);
@@ -140,6 +159,15 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_scan:
+                openScan();
+                break;
+        }
+    }
+
+    @Override
     public void initData() {
         presenter.getHome();
     }
@@ -169,5 +197,13 @@ public class HomeFragment extends BaseFragment<IHome.Presenter> implements IHome
             hotAdapter.notifyDataSetChanged();
 
         }
+    }
+
+    /**
+     * 打开扫描页面
+     */
+    private void openScan(){
+        Intent intent = new Intent(mContext, CaptureActivity.class);
+        startActivityForResult(intent,Constants.PAGE_SCAN_CODE);
     }
 }

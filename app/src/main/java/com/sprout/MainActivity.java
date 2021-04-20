@@ -9,12 +9,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.zxing.activity.CaptureActivity;
 import com.sprout.app.Constants;
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.home.IMain;
@@ -160,8 +162,22 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("TAG",String.valueOf(requestCode));
+
+        if(data != null){
+            if(data.hasExtra(CaptureActivity.SCAN_QRCODE_RESULT)){
+                String result = data.getStringExtra(CaptureActivity.SCAN_QRCODE_RESULT);
+                Log.i("TAG",result);
+            }
+        }
+
         if(requestCode == Constants.PAGE_REQEST_CODE_GOODDETAIL){
             gotoCar();
+        }else if(requestCode == Constants.PAGE_SCAN_CODE){  //二维码扫描
+            String result = data.getStringExtra(CaptureActivity.SCAN_QRCODE_RESULT);
+            Bitmap bitmap = data.getParcelableExtra(CaptureActivity.SCAN_QRCODE_BITMAP);
+            if(bitmap != null){
+               // imgResult.setImageBitmap(bitmap);
+            }
         }
     }
 
@@ -174,13 +190,17 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
         transaction.replace(R.id.fragmentbox,carFragment).commit();*/
     }
 
-    private void gotoMine(){
-        if(currentItemId == R.id.menu_mine){
-            if(mineFragment != null){
-                ((MineFragment)mineFragment).wxUpdateInfo();
+    private void gotoMine() {
+        if (currentItemId == R.id.menu_mine) {
+            if (mineFragment != null) {
+                ((MineFragment) mineFragment).wxUpdateInfo();
             }
-        }else{
+        } else {
             bottomNavigation.setSelectedItemId(R.id.menu_mine);
         }
+    }
+
+    private void scan(){
+
     }
 }

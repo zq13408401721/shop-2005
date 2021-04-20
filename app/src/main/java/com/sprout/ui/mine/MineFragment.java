@@ -50,7 +50,8 @@ public class MineFragment extends BaseFragment<IMine.Presenter> implements IMine
     @Override
     public void initView() {
         String uid = SpUtils.getInstance().getString("uid");
-        if(uid == null ||  uid.isEmpty()){
+        String wx_access_token = SpUtils.getInstance().getString("access_token");
+        if(uid == null ||  uid.isEmpty() && wx_access_token == null || wx_access_token.isEmpty()){
             Intent intent = new Intent(mContext, LoginActivity.class);
             startActivity(intent);
             return;

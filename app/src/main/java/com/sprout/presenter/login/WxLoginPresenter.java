@@ -29,7 +29,7 @@ public class WxLoginPresenter extends BasePresenter<IWx.View> implements IWx.Pre
             @Override
             public void success(WxTokenBean wxTokenBean) {
                 if(mView != null){
-                    mView.getWxTokenReturn(null);
+                    mView.getWxTokenReturn(wxTokenBean);
                 }
             }
         });
