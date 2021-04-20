@@ -63,7 +63,7 @@ public class HttpManager {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60,TimeUnit.SECONDS)
-                .addInterceptor(new LoggingInterceptor())
+                //.addInterceptor(new LoggingInterceptor())
                 .addInterceptor(new HeaderInterceptor())
                 .build();
         return okHttpClient;
