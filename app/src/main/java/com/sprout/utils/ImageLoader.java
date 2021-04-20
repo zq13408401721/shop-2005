@@ -22,7 +22,7 @@ public class ImageLoader {
     public static void imageLoad(String url, ImageView img){
         boolean bool = SpUtils.getInstance().getBoolean("imageloader");
         if(bool){
-            Glide.with(MyApp.app).load(url).into(img);
+            Glide.with(img).load(url).into(img);
         }
     }
 
@@ -36,7 +36,7 @@ public class ImageLoader {
     public static void imageLoad(String url, ImageView img, RequestOptions options){
         boolean bool = SpUtils.getInstance().getBoolean("imageloader");
         if(bool){
-            Glide.with(MyApp.app).load(url).apply(options).into(img);
+            Glide.with(img).load(url).apply(options).into(img);
         }
     }
 

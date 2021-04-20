@@ -98,5 +98,9 @@ dependencies {
 
     //oss
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
+    // um分享
+    implementation  'com.umeng.umsdk:common:9.3.6'//必选
+    implementation  'com.umeng.umsdk:asms:1.2.1'//必选
+
 
 }

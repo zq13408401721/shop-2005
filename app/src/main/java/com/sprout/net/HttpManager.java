@@ -42,6 +42,8 @@ public class HttpManager {
 
     private ServiceApi payApi;
 
+    private ServiceApi wxApi;
+
 
     private Map<String,Retrofit> map = new HashMap<>();  //retrofit请求对象的对象池
 
@@ -118,5 +120,17 @@ public class HttpManager {
         }
         return payApi;
     }
+
+    /**
+     * 微信登录
+     * @return
+     */
+    public ServiceApi getWXService(){
+        if(wxApi == null){
+            wxApi = getRetrofit(ServiceApi.BASE_WX_URL).create(ServiceApi.class);
+        }
+        return wxApi;
+    }
+
 
 }

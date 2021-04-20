@@ -53,7 +53,13 @@
             android:taskAffinity="com.sprout"
             android:launchMode="singleInstance"/>
 
-        <activity android:name=".ui.mine.UserInfoActivity"/>
+        <!--微信登录-->
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:taskAffinity="com.sprout"
+            android:launchMode="singleTask"/>
+
+        <activity android:name=".ui.mine.UserInfoActivity" />
 
 
     </application>

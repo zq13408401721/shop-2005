@@ -1,16 +1,22 @@
 package com.sprout.ui.login;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sprout.R;
+import com.sprout.app.Constants;
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.login.ILogin;
 import com.sprout.mode.data.LoginBean;
 import com.sprout.presenter.login.LoginPresenter;
 import com.sprout.utils.SpUtils;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.w3c.dom.Text;
 
@@ -24,6 +30,10 @@ public class LoginActivity extends BaseActivity<ILogin.Presenter> implements ILo
     EditText inputPassword;
     @BindView(R.id.txt_login)
     TextView txtLogin;
+    @BindView(R.id.img_wx)
+    ImageView imgWx;
+
+    IWXAPI iwxapi;
 
     @Override
     protected int getLayout() {
@@ -32,6 +42,10 @@ public class LoginActivity extends BaseActivity<ILogin.Presenter> implements ILo
 
     @Override
     protected void initView() {
+        //微信api的初始化
+        iwxapi = WXAPIFactory.createWXAPI(this, Constants.WX_APPID);
+        iwxapi.registerApp(Constants.WX_APPID);
+
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +53,22 @@ public class LoginActivity extends BaseActivity<ILogin.Presenter> implements ILo
             }
         });
 
+        imgWx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendAuth.Req req = new SendAuth.Req();
+                req.scope = "snsapi_userinfo";
+                req.state = "shop";
+                iwxapi.sendReq(req);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     @Override

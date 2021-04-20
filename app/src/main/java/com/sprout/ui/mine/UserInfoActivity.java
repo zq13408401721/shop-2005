@@ -18,6 +18,7 @@ import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.luck.picture.lib.PictureSelector;
@@ -54,8 +55,8 @@ public class UserInfoActivity extends BaseActivity<IMine.UserPresenter> implemen
     @BindView(R.id.txt_birthday)
     TextView txtBirthday;
 
-    private final int width = 200;
-    private final int height = 200;
+    private final int width = 400;
+    private final int height = 400;
 
     /*********oss 文件上传*****************/
     String bucketName = "sprout-app";
@@ -74,8 +75,7 @@ public class UserInfoActivity extends BaseActivity<IMine.UserPresenter> implemen
         String head = SpUtils.getInstance().getString("avatar");
         String nickname = SpUtils.getInstance().getString("nickname");
         String birthday = SpUtils.getInstance().getString("birthday");
-        RoundedCorners roundedCorners = new RoundedCorners(30);
-        RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
+        RequestOptions options = RequestOptions.bitmapTransform(new CircleCrop());
         ImageLoader.imageLoad(head,imgHead,options);
         TextViewUtils.setTextView(nickname,txtNickname);
         TextViewUtils.setTextView(birthday,txtBirthday);
@@ -115,7 +115,7 @@ public class UserInfoActivity extends BaseActivity<IMine.UserPresenter> implemen
         if(result.getData() != null){
             SpUtils.getInstance().setValue("avatar",result.getData().getAvatar());
             SpUtils.getInstance().setValue("nickname",result.getData().getNickname());
-            SpUtils.getInstance().setValue("birthday",result.getData().getBirthday());
+            SpUtils.getInstance().setValue("birthday",String.valueOf(result.getData().getBirthday()));
         }
     }
 
@@ -210,13 +210,12 @@ public class UserInfoActivity extends BaseActivity<IMine.UserPresenter> implemen
      * @param avatar
      */
     private void updateUserHead(String avatar){
-        RoundedCorners roundedCorners = new RoundedCorners(30);
-        RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
-        ImageLoader.imageLoad(avatar,imgHead,options);
-
         //更新服务器的头像数据
         Map<String,String> map = new HashMap<>();
         map.put("avatar",avatar);
         presenter.updateUserInfo(map);
+        RequestOptions options = RequestOptions.bitmapTransform(new CircleCrop());
+        ImageLoader.imageLoad(avatar,imgHead);
+        Log.i("TAG","头像刷新");
     }
 }

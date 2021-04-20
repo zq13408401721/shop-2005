@@ -141,6 +141,9 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
                 intent.removeExtra("type");
                 if(type == Constants.PAGE_REQEST_CODE_GOODDETAIL){
                     gotoCar();
+                }else if(type == Constants.PAGE_WXLOGIN_CODE){
+                    //个人信息界面
+                    gotoMine();
                 }
             }
         }
@@ -169,5 +172,15 @@ public class MainActivity extends BaseActivity<IMain.Presenter> implements IMain
         FragmentTransaction transaction;
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentbox,carFragment).commit();*/
+    }
+
+    private void gotoMine(){
+        if(currentItemId == R.id.menu_mine){
+            if(mineFragment != null){
+                ((MineFragment)mineFragment).wxUpdateInfo();
+            }
+        }else{
+            bottomNavigation.setSelectedItemId(R.id.menu_mine);
+        }
     }
 }

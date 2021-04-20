@@ -17,10 +17,14 @@ import com.sprout.mode.data.NewGoodsBean;
 import com.sprout.mode.data.UpdateCarBean;
 import com.sprout.mode.data.UpdateUserInfoBean;
 import com.sprout.mode.data.WXOrderBean;
+import com.sprout.mode.data.WxTokenBean;
+import com.sprout.mode.data.WxTokenRefreshBean;
+import com.sprout.mode.data.WxUserInfoBean;
 
 import java.util.Map;
 
 import io.reactivex.Flowable;
+import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -33,6 +37,8 @@ public interface ServiceApi {
     String BASE_URL = "https://cdplay.cn/";
 
     String BASE_PAY_URL = "http://cdwan.cn:9000/";
+
+    String BASE_WX_URL = "https://api.weixin.qq.com/";
 
 
     @GET("api/index")
@@ -164,5 +170,27 @@ public interface ServiceApi {
     @POST("api/user/updateUserInfo")
     @FormUrlEncoded
     Flowable<UpdateUserInfoBean> updateUserInfo(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取微信的access_token
+     */
+    @GET("sns/oauth2/access_token")
+    Flowable<WxTokenBean> getWxAccessToken(@QueryMap Map<String,String> map);
+
+    /**
+     * 微信token刷新
+     * @param map
+     * @return
+     */
+    @GET("sns/oauth2/refresh_token")
+    Flowable<WxTokenRefreshBean> getWxRefreshToken(@QueryMap Map<String,String> map);
+
+    /**
+     * 获取微信的用户数据
+     * @param map
+     * @return
+     */
+    @GET("sns/userinfo")
+    Flowable<WxUserInfoBean> getWxUserInfo(@QueryMap Map<String,String> map);
 
 }
