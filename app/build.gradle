@@ -15,9 +15,41 @@ android {
 
         multiDexEnabled true
 
+        flavorDimensions "versionCode"
+        manifestPlaceholders = [  UMENG_CHANNEL: "\"官方\"" ]
+
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        /*release{
+            storeFile file('../sprout.jks')
+            keyAlias 'key0'
+            keyPassword 'sprout918'
+            storePassword 'sprout918'
+        }*/
 
+        /*debug{
+            storeFile file('../sprout.jks')
+            keyAlias 'key0'
+            keyPassword 'sprout918'
+            storePassword 'sprout918'
+        }*/
+
+        release {
+            storeFile file('../shop.jks')
+            keyAlias 'shop'
+            keyPassword 'shop123456'
+            storePassword 'shop123456'
+        }
+
+        debug {
+            storeFile file('../shop.jks')
+            keyAlias 'shop'
+            keyPassword 'shop123456'
+            storePassword 'shop123456'
+        }
+    }
 
     buildTypes {
         release {
@@ -25,33 +57,51 @@ android {
             buildConfigField('String','APPName',rootProject.ext.configField['APPName_release'])
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release  //签名
         }
         debug{
             buildConfigField('String','ServerAddress',rootProject.ext.configField['ServerAddress_debug'])
             buildConfigField('String','APPName',rootProject.ext.configField['APPName_debug'])
+            signingConfig signingConfigs.debug  //签名
         }
     }
 
-    signingConfigs{
-        release{
-            storeFile file('../sprout.jks')
-            keyAlias 'key0'
-            keyPassword 'sprout918'
-            storePassword 'sprout918'
-        }
 
-        debug{
-            storeFile file('../sprout.jks')
-            keyAlias 'key0'
-            keyPassword 'sprout918'
-            storePassword 'sprout918'
-        }
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    //flavorDimensions "channel"
+    productFlavors {
+        baidu {
+            manifestPlaceholders = [UMENG_CHANNEL: "baidu"]
+        }
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL: "xiaomi"]
+        }
+        qihu360 {
+            manifestPlaceholders = [UMENG_CHANNEL: "qihu360"]
+        }
+        yingyongbao {
+            manifestPlaceholders = [UMENG_CHANNEL: "yingyongbao"]
+        }
+        huawei {
+            manifestPlaceholders = [UMENG_CHANNEL: "huawei"]
+        }
+    }
+
+    /*productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL: name]
+    }*/
+
+   /* applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "driver_${variant.productFlavors[0].name}_v${variant.versionName}.apk"
+        }
+    }*/
+
 }
 
 dependencies {
