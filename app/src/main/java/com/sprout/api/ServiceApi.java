@@ -16,6 +16,7 @@ import com.sprout.mode.data.NewGoodTopBean;
 import com.sprout.mode.data.NewGoodsBean;
 import com.sprout.mode.data.UpdateCarBean;
 import com.sprout.mode.data.UpdateUserInfoBean;
+import com.sprout.mode.data.VersionBean;
 import com.sprout.mode.data.WXOrderBean;
 import com.sprout.mode.data.WxTokenBean;
 import com.sprout.mode.data.WxTokenRefreshBean;
@@ -39,6 +40,8 @@ public interface ServiceApi {
     String BASE_PAY_URL = "http://cdwan.cn:9000/";
 
     String BASE_WX_URL = "https://api.weixin.qq.com/";
+
+    String BASE_VERSION = "http://cdwan.cn:7000/";
 
 
     @GET("api/index")
@@ -192,5 +195,13 @@ public interface ServiceApi {
      */
     @GET("sns/userinfo")
     Flowable<WxUserInfoBean> getWxUserInfo(@QueryMap Map<String,String> map);
+
+
+    /**
+     * 获取最新的版本信息
+     * @return
+     */
+    @GET("tongpao/apk/version.json")
+    Flowable<VersionBean> getVersion();
 
 }

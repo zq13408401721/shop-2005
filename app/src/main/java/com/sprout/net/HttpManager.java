@@ -43,6 +43,7 @@ public class HttpManager {
     private ServiceApi payApi;
 
     private ServiceApi wxApi;
+    private ServiceApi versionApi;
 
 
     private Map<String,Retrofit> map = new HashMap<>();  //retrofit请求对象的对象池
@@ -130,6 +131,18 @@ public class HttpManager {
             wxApi = getRetrofit(ServiceApi.BASE_WX_URL).create(ServiceApi.class);
         }
         return wxApi;
+    }
+
+
+    /**
+     * 版本更新
+     * @return
+     */
+    public ServiceApi getVersionApi(){
+        if(versionApi == null){
+            versionApi = getRetrofit(ServiceApi.BASE_VERSION).create(ServiceApi.class);
+        }
+        return versionApi;
     }
 
 
