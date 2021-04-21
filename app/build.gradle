@@ -73,34 +73,33 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    //flavorDimensions "channel"
     productFlavors {
         baidu {
-            manifestPlaceholders = [UMENG_CHANNEL: "baidu"]
+            //manifestPlaceholders = [channel: "baidu"]
         }
         xiaomi {
-            manifestPlaceholders = [UMENG_CHANNEL: "xiaomi"]
+           // manifestPlaceholders = [channel: "xiaomi"]
         }
         qihu360 {
-            manifestPlaceholders = [UMENG_CHANNEL: "qihu360"]
+           //manifestPlaceholders = [channel: "qihu360"]
         }
         yingyongbao {
-            manifestPlaceholders = [UMENG_CHANNEL: "yingyongbao"]
+            //manifestPlaceholders = [channel: "yingyongbao"]
         }
         huawei {
-            manifestPlaceholders = [UMENG_CHANNEL: "huawei"]
+            //manifestPlaceholders = [channel: "huawei"]
         }
     }
+    // 上面的channel复制同一个意思
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [channel: name]
+    }
 
-    /*productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL: name]
-    }*/
-
-   /* applicationVariants.all { variant ->
+    applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "driver_${variant.productFlavors[0].name}_v${variant.versionName}.apk"
         }
-    }*/
+    }
 
 }
 
