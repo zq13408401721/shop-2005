@@ -35,6 +35,7 @@ public class MyView extends androidx.appcompat.widget.AppCompatTextView {
     public boolean onTouchEvent(MotionEvent event) {
         MyLog.log(event,"View","onTouchEvent");
         //return super.onTouchEvent(event);
+        invalidate();
         return true;
     }
 

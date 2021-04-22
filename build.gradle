@@ -7,6 +7,9 @@ buildscript {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release'}
+        maven {
+            url 'https://artifact.bytedance.com/repository/pangle'
+        }
     }
 
     dependencies {
@@ -23,6 +26,9 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release'}
+        maven {
+            url 'https://artifact.bytedance.com/repository/pangle'
+        }
         flatDir {
             dirs 'libs'
         }

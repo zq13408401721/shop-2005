@@ -25,4 +25,11 @@ public class Constants {
 
     public static final String UM_APPID = "607db3875844f15425ddf88e";
 
+
+
+    public static final String ADVERT_ID = "5148508"; //广告ID
+    public static final String ADVERT_POS_ID = "945896225";  //广告位的ID  banner
+    public static final String ADVERT_FULL_VIDEO_ID = "945896229";
+
+
 }

@@ -8,9 +8,9 @@ android {
 
     defaultConfig {
         applicationId "com.sprout"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 30
-        versionCode 2
+        versionCode 10
         versionName "1.1.0"
 
         multiDexEnabled true
@@ -18,6 +18,9 @@ android {
         flavorDimensions "versionCode"
         manifestPlaceholders = [  UMENG_CHANNEL: "\"官方\"" ]
 
+        ndk { // 设置支持的 SO 库构架，注意这里要根据你的实际情况来设置
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'armeabi'
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -152,6 +155,10 @@ dependencies {
     implementation  'com.umeng.umsdk:common:9.3.6'//必选
     implementation  'com.umeng.umsdk:asms:1.2.1'//必选
 
+    /**
+     * 穿山甲广告sdk
+     */
+    implementation 'com.pangle.cn:ads-sdk:3.5.0.6'
 
 
 }

@@ -63,11 +63,11 @@ public class LoginBean {
             this.token = token;
         }
 
-        public UserInfoBean getUserInfo() {
+        public UserInfoBean getLoginUserInfo() {
             return userInfo;
         }
 
-        public void setUserInfo(UserInfoBean userInfo) {
+        public void setLoginUserInfo(UserInfoBean userInfo) {
             this.userInfo = userInfo;
         }
 

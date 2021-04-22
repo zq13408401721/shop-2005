@@ -31,12 +31,12 @@ public class FileUtils {
      * @return
      */
     public static String getLocalPath(){
-        String path;
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+        String path = "data/data/"+BuildConfig.APPLICATION_ID;
+        /*if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
             path = Environment.getExternalStorageDirectory().getPath();
         }else{
             path = Environment.getStorageDirectory().getAbsolutePath();
-        }
+        }*/
         return path;
     }
 
@@ -84,12 +84,19 @@ public class FileUtils {
 //            //7.0以前版本使用
 //            process = new ProcessBuilder("pm", "install", "-r", apkPath).start();
             //7.0以后版本使用
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+
+            /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
                 process = new ProcessBuilder("pm", "install","-i", BuildConfig.APPLICATION_ID, "-r", apkPath).start();
             }else{
                 process = new ProcessBuilder("pm", "install", "-r", apkPath).start();
-            }
+            }*/
+            Runtime.getRuntime().exec("chmod 777 " + apkPath);
 
+            //process = new ProcessBuilder("pm", "install", "-i",BuildConfig.APPLICATION_ID,"-r", apkPath).start();
+            String command = "pm install -i com.sprout --user 0 "+apkPath;
+            String[] args = {"pm", "install", "-r", apkPath};
+            //process  = Runtime.getRuntime().exec(command);
+            process = new ProcessBuilder(args).start();
             successResult = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream()));

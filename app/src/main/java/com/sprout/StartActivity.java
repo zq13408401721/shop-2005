@@ -1,6 +1,7 @@
 package com.sprout;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -20,6 +21,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bytedance.sdk.openadsdk.AdSlot;
+import com.bytedance.sdk.openadsdk.TTAdConstant;
+import com.bytedance.sdk.openadsdk.TTAdNative;
+import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.bytedance.sdk.openadsdk.TTBannerAd;
+import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd;
+import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
+import com.sprout.app.Constants;
 import com.sprout.app.MyApp;
 import com.sprout.base.BaseActivity;
 import com.sprout.interfaces.start.IStart;
@@ -63,6 +72,9 @@ public class StartActivity extends BaseActivity<IStart.Presenter> implements ISt
 
     LoadingPopWindow loadingPopWindow;
 
+    /************************广告相关**********************/
+    TTBannerAd bannerAd;
+
 
 
     @Override
@@ -72,7 +84,8 @@ public class StartActivity extends BaseActivity<IStart.Presenter> implements ISt
 
     @Override
     protected void initView() {
-
+       // initAdvert();
+        initFullVideo();
     }
 
     /**
@@ -126,8 +139,8 @@ public class StartActivity extends BaseActivity<IStart.Presenter> implements ISt
 
     private void comeInApp(){
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        //startActivity(intent);
+        //finish();
     }
 
     /**
@@ -205,7 +218,59 @@ public class StartActivity extends BaseActivity<IStart.Presenter> implements ISt
      * 安装apk
      */
     private void installApk(String filepath){
-        FileUtils.installApk(filepath);
+        //FileUtils.installApk(filepath);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(new File(filepath)), "application/vnd.android.package-archive");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
+    private void initAdvert(){
+        TTAdNative mTTAdNative = TTAdSdk.getAdManager().createAdNative(this);
+        AdSlot adSlot = new AdSlot.Builder()
+                .setCodeId(Constants.ADVERT_POS_ID)
+                .setSupportDeepLink(true)
+                .setAdCount(1)
+                .setImageAcceptedSize(1080, 1920)
+                .build();
+        mTTAdNative.loadBannerAd(adSlot, new TTAdNative.BannerAdListener() {
+            @Override
+            public void onError(int i, String s) {
+
+            }
+
+            @Override
+            public void onBannerAdLoad(TTBannerAd ttBannerAd) {
+
+            }
+        });
+    }
+
+    private void initFullVideo(){
+        TTAdNative mTTAdNative = TTAdSdk.getAdManager().createAdNative(this);
+        AdSlot adSlot = new AdSlot.Builder()
+                .setCodeId(Constants.ADVERT_FULL_VIDEO_ID)
+                .setSupportDeepLink(true)
+                .setOrientation(TTAdConstant.VERTICAL)//必填参数，期望视频的播放方向：TTAdConstant.HORIZONTAL 或 TTAdConstant.VERTICAL
+                .build();
+        mTTAdNative.loadFullScreenVideoAd(adSlot, new TTAdNative.FullScreenVideoAdListener() {
+            @Override
+            public void onError(int i, String s) {
+                Log.i("Advert",s);
+            }
+
+            @Override
+            public void onFullScreenVideoAdLoad(TTFullScreenVideoAd ttFullScreenVideoAd) {
+                Log.i("Advert","onFullScreenVideoAdLoad");
+                ttFullScreenVideoAd.showFullScreenVideoAd(StartActivity.this);
+            }
+
+            @Override
+            public void onFullScreenVideoCached() {
+                Log.i("Advert","onFullScreenVideoCached");
+            }
+        });
     }
 
 

@@ -101,12 +101,11 @@ public class SystemUtils {
      * @param versioncode
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public static boolean isUpdate(Context context, String pg, int versioncode){
         String currenPg = context.getPackageName();
         if(currenPg.equals(pg)){
             try{
-                long currentCode = context.getPackageManager().getPackageInfo(currenPg,0).getLongVersionCode();
+                int currentCode = context.getPackageManager().getPackageInfo(currenPg,0).versionCode;
                 if(currentCode < versioncode){
                     return true;
                 }

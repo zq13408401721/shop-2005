@@ -103,11 +103,11 @@ public class LoginActivity extends BaseActivity<ILogin.Presenter> implements ILo
     public void loginReturn(LoginBean result) {
         if(result.getData() != null){
             SpUtils.getInstance().setValue("token",result.getData().getToken());
-            SpUtils.getInstance().setValue("uid",result.getData().getUserInfo().getUid());
-            SpUtils.getInstance().setValue("username",result.getData().getUserInfo().getUsername());
-            SpUtils.getInstance().setValue("nickname",result.getData().getUserInfo().getNickname());
-            SpUtils.getInstance().setValue("avater",result.getData().getUserInfo().getAvatar());
-            SpUtils.getInstance().setValue("birthday",String.valueOf(result.getData().getUserInfo().getBirthday()));
+            SpUtils.getInstance().setValue("uid",result.getData().getLoginUserInfo().getUid());
+            SpUtils.getInstance().setValue("username",result.getData().getLoginUserInfo().getUsername());
+            SpUtils.getInstance().setValue("nickname",result.getData().getLoginUserInfo().getNickname());
+            SpUtils.getInstance().setValue("avater",result.getData().getLoginUserInfo().getAvatar());
+            SpUtils.getInstance().setValue("birthday",String.valueOf(result.getData().getLoginUserInfo().getBirthday()));
             finish();
         }
     }
